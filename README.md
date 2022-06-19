@@ -14,6 +14,9 @@ We minimize every interaction so there's little to no barrier to log your expens
 
 ## Running Development Mode
 
-```
+```bash
+npm install
 npm start
 ```
+
+Afterwards, open up `http://localhost:3000`.
