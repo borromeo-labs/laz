@@ -16,7 +16,7 @@ We minimize every interaction so there's little to no barrier to log your expens
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 Afterwards, open up `http://localhost:3000`.
