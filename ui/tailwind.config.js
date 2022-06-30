@@ -5,7 +5,7 @@ module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: ['Neue Haas Display', ...defaultTheme.fontFamily.sans],
+      sans: ['Readex Pro', ...defaultTheme.fontFamily.sans],
       serif: ['Playfair Display', ...defaultTheme.fontFamily.serif]
     },
 
@@ -15,7 +15,8 @@ module.exports = {
       16: '16px',
       24: '24px',
       32: '32px',
-      48: '48px'
+      48: '48px',
+      56: '56px'
     },
 
     extend: {}
