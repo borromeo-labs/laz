@@ -14,6 +14,8 @@ We minimize every interaction so there's little to no barrier to log your expens
 
 ## Running Development Mode
 
+Go the `ui` folder then run:
+
 ```bash
 npm install
 npm run dev

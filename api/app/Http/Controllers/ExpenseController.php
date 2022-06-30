@@ -34,19 +34,23 @@ class ExpenseController extends Controller
     {
         request()->validate([
             'amount' => ['required'],
-            'description' => ['required', 'max:255']
+            'description' => ['required', 'max:255'],
+            'due_at' => ['required', 'date']
         ]);
 
         $group->update([
             'amount_total' => request()->get('amount_total')
         ]);
 
-        $item = Item::create([
-            'type' => 'expense',
-            'group_id' => $group->id,
-            'amount' => request()->get('amount'),
-            'description' => request()->get('description'),
-        ]);
+        $item = request()->user()->groups()->create(
+            [
+                'group_id' => $group->id,
+                'type' => 'expense',
+                'amount' => request()->get('amount'),
+                'description' => request()->get('description'),
+                'due_at' => request()->get('due_at'),
+            ]
+        );
 
         return response()->json([
             'expense_item' => $item
@@ -60,7 +64,8 @@ class ExpenseController extends Controller
     {
         request()->validate([
             'amount' => ['required'],
-            'description' => ['required', 'max:255']
+            'description' => ['required', 'max:255'],
+            'due_at' => ['required', 'date']
         ]);
 
         $group->update([
@@ -68,11 +73,23 @@ class ExpenseController extends Controller
         ]);
 
         $item->update(
-            request()->only(['amount', 'description'])
+            request()->only(['amount', 'description', 'due_at'])
         );
 
         return response()->json([
             'expense_item' => $item
         ]);
+    }
+
+    /**
+     * Delete existing expense item
+     */
+    public function destroy(ExpenseGroup $group, ExpenseItem $item)
+    {
+        $item->delete();
+
+        return response()->json([
+            'status' => 'success'
+        ])
     }
 }

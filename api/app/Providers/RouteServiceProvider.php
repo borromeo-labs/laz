@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function bindModels()
     {
         Route::bind('group', function ($value) {
-            return ExpenseGroup::firstOrCreateOnDemand($value);
+            return request()->user()->expenses()->firstOrCreateOnDemand($value);
         });
 
         Route::model('item', \App\Models\ExpenseItem::class);

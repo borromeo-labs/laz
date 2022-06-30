@@ -10,6 +10,18 @@ class Bill extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'amount',
+        'description',
+        'recur_at',
+        'recur_interval',
+    ];
+
     public function user() {
         return $this->belongsTo(User::class)
     }
