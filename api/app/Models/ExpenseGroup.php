@@ -71,7 +71,7 @@ class ExpenseGroup extends Model
      * Create the expense group if requested month is current month
      */
     public static function firstOrCreateOnDemand($date) {
-        if (!is_null($instance = static::month($date)->exists())) {
+        if (!is_null($instance = static::month($date)->first())) {
             return $instance;
         }
         
