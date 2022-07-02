@@ -30,7 +30,7 @@ class ExpenseController extends Controller
     /**
      * Record a new expense item into an expense group
      */
-    public function add(ExpenseGroup $group)
+    public function store(ExpenseGroup $group)
     {
         request()->validate([
             'amount' => ['required'],
