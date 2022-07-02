@@ -22,6 +22,6 @@ class ExpenseItem extends Model
     ];
 
     public function group() {
-        return $this->belongsTo(ExpenseGroup::class);
+        return $this->belongsTo(ExpenseGroup::class, 'group_id');
     }
 }
