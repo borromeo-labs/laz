@@ -9,6 +9,9 @@ import { useKeyPressEvent } from 'react-use'
 import { useNotificationState } from '@/hooks'
 import { Badge, Button, Modal } from '@/components'
 
+import { axios } from '@/axios'
+import { useMutation } from 'react-query'
+
 import { parseExpenseString } from './utils'
 
 const schema = Yup.object({
@@ -31,6 +34,16 @@ const ExpenseClerk = () => {
     resolver: resolver(schema)
   })
 
+  const group = '2022-07'
+
+  const { mutate } = useMutation(['expenses-groups', group, 'items'], (values) => {
+    return axios.post(`/expense-groups/${group}/items`, {
+      amount: values.amount,
+      description: values.description,
+      due_at: Date.now()
+    })
+  })
+
   const handleOpen = () => {
     setIsOpen(true)
   }
@@ -43,6 +56,7 @@ const ExpenseClerk = () => {
   const onSubmit = (values) => {
     setIsSuccess()
     reset()
+    mutate(values)
     console.log(values)
   }
 
