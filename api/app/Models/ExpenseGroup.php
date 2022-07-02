@@ -16,6 +16,7 @@ class ExpenseGroup extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'name',
         'amount_total'
     ];
@@ -76,12 +77,11 @@ class ExpenseGroup extends Model
         }
         
         $attributes = [
-            'user_id' => request()->user()->id,
             'name' => Carbon::parse($date)->format('F y'),
             'amount_total' => 0
         ];
         
-        return static::create($attributes);
+        return request()->user()->expenses()->save($attributes);
     }
 
     /**
