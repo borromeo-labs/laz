@@ -2,7 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.tsx'],
   theme: {
     fontFamily: {
       sans: ['Readex Pro', ...defaultTheme.fontFamily.sans],
@@ -10,16 +10,36 @@ module.exports = {
     },
 
     spacing: {
+      0: '0px',
+      px: '1px',
       8: '8px',
       12: '12px',
       16: '16px',
       24: '24px',
       32: '32px',
       48: '48px',
-      56: '56px'
+      56: '56px',
+      64: '64px'
     },
 
-    extend: {}
+    fontSize: {
+      h1: '48.83px',
+      h2: '31.25px',
+      h3: '25px',
+      h4: '20px',
+      h5: '16px',
+      h6: '12.8px'
+    },
+
+    zIndex: {
+      modal: 1000
+    },
+
+    extend: {
+      colors: {
+        'dark-backdrop': 'rgba(0,0,0,0.5)'
+      }
+    }
   },
   plugins: []
 }
