@@ -63,8 +63,8 @@ class ExpenseGroup extends Model
         $dt = Carbon::parse($date);
 
         $query->whereBetween('created_at', [
-            $dt->firstOfMonth(),
-            $dt->lastOfMonth()
+            $dt->firstOfMonth()->format('Y-m-d'),
+            $dt->lastOfMonth()->format('Y-m-d')
         ]);
     }
 
