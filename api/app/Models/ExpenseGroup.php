@@ -18,14 +18,17 @@ class ExpenseGroup extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'amount_total'
+        'amount_total',
+        'month'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function items() {
+    public function items()
+    {
         return $this->hasMany(ExpenseItem::class, 'group_id');
     }
 
@@ -34,7 +37,8 @@ class ExpenseGroup extends Model
      * 
      * @return $this
      */
-    public function increaseAmountTotal(float $amount) {
+    public function increaseAmountTotal(float $amount)
+    {
         $this->update([
             'amount_total' => $this->amount_total + $amount
         ]);
@@ -45,7 +49,8 @@ class ExpenseGroup extends Model
      * 
      * @return $this
      */
-    public function decreaseAmountTotal(float $amount) {
+    public function decreaseAmountTotal(float $amount)
+    {
         $this->update([
             'amount_total' => $this->amount_total - $amount
         ]);
@@ -62,7 +67,7 @@ class ExpenseGroup extends Model
     {
         $dt = Carbon::parse($date);
 
-        $query->whereBetween('created_at', [
+        $query->whereBetween('month', [
             $dt->firstOfMonth()->format('Y-m-d'),
             $dt->lastOfMonth()->format('Y-m-d')
         ]);
@@ -71,16 +76,20 @@ class ExpenseGroup extends Model
     /**
      * Create the expense group if requested month is current month
      */
-    public static function firstOrCreateOnDemand($date) {
+    public static function firstOrCreateOnDemand($date)
+    {
         if (!is_null($instance = static::month($date)->first())) {
             return $instance;
         }
-        
+
+        $dt = Carbon::parse($date);
+
         $attributes = [
-            'name' => Carbon::parse($date)->format('F y'),
+            'name' => $dt->format('F y'),
+            'month' => $dt->firstOfMonth(),
             'amount_total' => 0
         ];
-        
+
         return request()->user()->expenses()->save(
             new ExpenseGroup($attributes)
         );
@@ -94,23 +103,24 @@ class ExpenseGroup extends Model
     protected static function booted()
     {
         static::created(function ($group) {
-            $group->user->bills->each(function ($bill) {
-                if (!$bill->isGoingToRecur()) {
-                    return;
-                }
+            $group->user->bills
+                ->filter(function ($bill) {
+                    return $bill->isGoingToRecur();
+                })
+                ->each(function ($bill) use ($group) {
+                    $group->increaseAmountTotal(
+                        $bill->amount
+                    );
 
-                $group->increaseAmountTotal(
-                    $bill->amount
-                );
-
-                $item = Item::create([
-                    'group_id' => $group->id,
-                    'type' => 'bill',
-                    'amount' => $bill->amount,
-                    'description' => $bill->description,
-                    'due_at' => $bill->recur_at
-                ]);
-            });
+                    $group->items()->save(
+                        new ExpenseItem([
+                            'type' => 'bill',
+                            'amount' => $bill->amount,
+                            'description' => $bill->description,
+                            'due_at' => $bill->recur_at
+                        ])
+                    );
+                });
         });
     }
 }
