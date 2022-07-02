@@ -86,7 +86,7 @@ class ExpenseGroup extends Model
 
         $attributes = [
             'name' => $dt->format('F y'),
-            'month' => $dt->firstOfMonth(),
+            'month' => $dt->firstOfMonth()->format('Y-m-d'),
             'amount_total' => 0
         ];
 
@@ -112,12 +112,15 @@ class ExpenseGroup extends Model
                         $bill->amount
                     );
 
+                    $due = Carbon::now()->set($bill->recur_at->day)
+                        ->format('Y-m-d');
+
                     $group->items()->save(
                         new ExpenseItem([
                             'type' => 'bill',
                             'amount' => $bill->amount,
                             'description' => $bill->description,
-                            'due_at' => $bill->recur_at
+                            'due_at' => $due
                         ])
                     );
                 });
