@@ -26,7 +26,7 @@ class ExpenseGroup extends Model
     }
 
     public function items() {
-        return $this->hasMany(ExpenseItem::class);
+        return $this->hasMany(ExpenseItem::class, 'group_id');
     }
 
     /**
