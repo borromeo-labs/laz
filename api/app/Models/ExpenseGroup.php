@@ -70,8 +70,8 @@ class ExpenseGroup extends Model
     /**
      * Create the expense group if requested month is current month
      */
-    public function firstOrCreateOnDemand($date) {
-        if (!is_null($instance = $this->month($date)->exists())) {
+    public static function firstOrCreateOnDemand($date) {
+        if (!is_null($instance = static::month($date)->exists())) {
             return $instance;
         }
         
@@ -81,9 +81,7 @@ class ExpenseGroup extends Model
             'amount_total' => 0
         ];
         
-        return tap($this->newModelInstance($attributes), function ($instance) {
-            $instance->save();
-        });
+        return static::create($attributes);
     }
 
     /**
