@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 import { useForm, Controller, useWatch } from 'react-hook-form'
 import { yupResolver as resolver } from '@hookform/resolvers/yup'
@@ -9,9 +9,8 @@ import { useKeyPressEvent } from 'react-use'
 import { useNotificationState } from '@/hooks'
 import { Badge, Button, Modal } from '@/components'
 
-import { axios } from '@/axios'
-import { useMutation } from 'react-query'
-
+import { format } from 'date-fns'
+import { useExpenseGroupCreateMutation } from './mutations'
 import { parseExpenseString } from './utils'
 
 const schema = Yup.object({
@@ -34,15 +33,15 @@ const ExpenseClerk = () => {
     resolver: resolver(schema)
   })
 
-  const group = '2022-07'
+  const group = useMemo(() => {
+    return format(new Date(), 'yyyy-MM')
+  }, [])
 
-  const { mutate } = useMutation(['expenses-groups', group, 'items'], (values) => {
-    return axios.post(`/expense-groups/${group}/items`, {
-      amount: values.amount,
-      description: values.description,
-      due_at: `${group}-01`
-    })
-  })
+  const dueAt = useMemo(() => {
+    return format(new Date(), 'yyyy-MM-dd')
+  }, [])
+
+  const { mutate } = useExpenseGroupCreateMutation({ group })
 
   const handleOpen = () => {
     setIsOpen(true)
@@ -54,10 +53,14 @@ const ExpenseClerk = () => {
   }
 
   const onSubmit = (values) => {
+    mutate({
+      ...values,
+      due_at: dueAt
+    })
+
     setIsSuccess()
+
     reset()
-    mutate(values)
-    console.log(values)
   }
 
   const input = useWatch({
