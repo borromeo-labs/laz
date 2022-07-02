@@ -39,7 +39,7 @@ class ExpenseController extends Controller
         ]);
 
         $group->increaseAmountTotal(
-            request()->get('amount_total')
+            request()->get('amount')
         );
 
         $item = $group->items()->save(
