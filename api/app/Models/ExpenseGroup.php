@@ -70,16 +70,20 @@ class ExpenseGroup extends Model
     /**
      * Create the expense group if requested month is current month
      */
-    public static function firstOrCreateOnDemand($date) {
-        if (static::month($date)->exists()) {
-            return static::month($date)->first();
+    public function firstOrCreateOnDemand($date) {
+        if (!is_null($instance = $this->month($date)->exists())) {
+            return $instance;
         }
-
-        return static::create([
+        
+        $attributes = [
             'user_id' => request()->user()->id,
             'name' => Carbon::parse($date)->format('F y'),
             'amount_total' => 0
-        ]);
+        ];
+        
+        return tap($this->newModelInstance($attributes), function ($instance) {
+            $instance->save();
+        });
     }
 
     /**
