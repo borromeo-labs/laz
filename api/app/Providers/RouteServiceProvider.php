@@ -52,11 +52,11 @@ class RouteServiceProvider extends ServiceProvider
     protected function bindModels()
     {
         Route::bind('group', function ($value) {
-            return request()->user()->expenses()->firstOrCreateOnDemand($value);
+            return ExpenseGroup::firstOrCreateOnDemand($value);
         });
 
-        Route::model('item', \App\Models\ExpenseItem::class);
-        Route::model('bill', \App\Models\Bill::class);
+        Route::model('item', ExpenseItem::class);
+        Route::model('bill', Bill::class);
     }
 
     /**
