@@ -34,7 +34,7 @@ class ExpenseGroup extends Model
      * 
      * @return $this
      */
-    public function increaseAmountTotal(number $amount) {
+    public function increaseAmountTotal(double $amount) {
         $this->update([
             'amount_total' => $this->amount_total + $amount
         ]);
@@ -45,7 +45,7 @@ class ExpenseGroup extends Model
      * 
      * @return $this
      */
-    public function decreaseAmountTotal(number $amount) {
+    public function decreaseAmountTotal(double $amount) {
         $this->update([
             'amount_total' => $this->amount_total - $amount
         ]);
