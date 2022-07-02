@@ -32,14 +32,11 @@ module.exports = {
     },
 
     zIndex: {
-      modal: 1000
+      'modal-backdrop': 1000,
+      'modal-content': 1001
     },
 
-    extend: {
-      colors: {
-        'dark-backdrop': 'rgba(0,0,0,0.5)'
-      }
-    }
+    extend: {}
   },
   plugins: []
 }
