@@ -21,11 +21,11 @@ class ExpenseGroup extends Model
     ];
 
     public function user() {
-        return $this->belongsTo(User::class)
+        return $this->belongsTo(User::class);
     }
 
     public function items() {
-        return $this->hasMany(ExpenseItem::class)
+        return $this->hasMany(ExpenseItem::class);
     }
 
     /**
@@ -72,7 +72,7 @@ class ExpenseGroup extends Model
      */
     public static function firstOrCreateOnDemand($date) {
         if (static::month($date)->exists()) {
-            return $scope->month($date)->first();
+            return static::month($date)->first();
         }
 
         return static::create([
