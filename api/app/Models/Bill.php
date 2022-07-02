@@ -23,7 +23,7 @@ class Bill extends Model
     ];
 
     public function user() {
-        return $this->belongsTo(User::class)
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -43,6 +43,6 @@ class Bill extends Model
         }
 
         // @TODO: Throw an error
-        return false
+        return false;
     }
 }
