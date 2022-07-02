@@ -40,7 +40,7 @@ const ExpenseClerk = () => {
     return axios.post(`/expense-groups/${group}/items`, {
       amount: values.amount,
       description: values.description,
-      due_at: Date.now()
+      due_at: `${group}-01`
     })
   })
 
