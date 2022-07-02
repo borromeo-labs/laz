@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import { Transition } from '@headlessui/react'
 import { useKeyPressEvent } from 'react-use'
 import { useNotificationState } from '@/hooks'
-import { Modal } from '@/components'
+import { Badge, Button, Modal } from '@/components'
 
 import { parseExpenseString } from './utils'
 
@@ -64,11 +64,9 @@ const ExpenseClerk = () => {
 
   return (
     <>
-      <button
-        className="bg-blue-500 text-white font-semibold px-24 py-8 mr-16 rounded hover:bg-blue-700 duration-100 ease-linear"
-        onClick={handleOpen}>
-        New Expenses
-      </button>
+      <div className="mr-16">
+        <Button onClick={handleOpen}>New Expenses</Button>
+      </div>
 
       <Modal isOpen={isOpen} onClose={handleClose} title="New Expenses for Today">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -89,27 +87,24 @@ const ExpenseClerk = () => {
             />
 
             <div className="flex items-center space-x-8 pr-16">
-              <Transition
-                key={isSuccessKey}
-                appear={true}
-                show={isSuccess}
-                enter="transition duration-150"
-                enterFrom="opacity-0 translate-y-8"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 -translate-y-8">
-                <span className="inline-block p-8 text-blue-600 text-h6 font-bold leading-none bg-blue-200 rounded">
-                  Recorded
-                </span>
-              </Transition>
+              <div>
+                <Transition
+                  key={isSuccessKey}
+                  appear={true}
+                  show={isSuccess}
+                  enter="transition duration-150"
+                  enterFrom="transform opacity-0 translate-y-8"
+                  enterTo="transform opacity-100 translate-y-0"
+                  leave="transition duration-150"
+                  leaveFrom="transform opacity-100 translate-y-0"
+                  leaveTo="transform opacity-0 -translate-y-8">
+                  <Badge>Recorded</Badge>
+                </Transition>
+              </div>
 
-              <button
-                type="submit"
-                disabled={!formState.isValid}
-                className="inline-block py-8 px-16 text-white text-h6 font-bold leading-none bg-blue-500 rounded disabled:opacity-50">
+              <Button type="submit" disabled={!formState.isValid} size="sm">
                 Add
-              </button>
+              </Button>
             </div>
           </div>
 

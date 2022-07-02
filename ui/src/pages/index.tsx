@@ -46,9 +46,10 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="flex w-1/4 justify-end">
+            <div className="flex items-center justify-end w-1/4">
               <ExpenseClerk />
-              <button className="flex items-center justify-center bg-blue-200 w-[44px] rounded">
+
+              <button className="flex items-center justify-center bg-blue-200 h-[44px] w-[44px] rounded">
                 <span className="font-semibold">KB</span>
               </button>
             </div>
