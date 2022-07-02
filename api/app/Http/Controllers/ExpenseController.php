@@ -42,14 +42,13 @@ class ExpenseController extends Controller
             request()->get('amount_total')
         );
 
-        $item = request()->user()->groups()->create(
-            [
-                'group_id' => $group->id,
+        $item = $group->items()->save(
+            new ExpenseItem([
                 'type' => 'expense',
                 'amount' => request()->get('amount'),
                 'description' => request()->get('description'),
                 'due_at' => request()->get('due_at'),
-            ]
+            ])
         );
 
         return response()->json([
