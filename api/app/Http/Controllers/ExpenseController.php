@@ -35,7 +35,7 @@ class ExpenseController extends Controller
         request()->validate([
             'amount' => ['required'],
             'description' => ['required', 'max:255'],
-            'due_at' => ['required', 'date']
+            'due_at' => ['required', 'date_format:Y-m-d']
         ]);
 
         $group->increaseAmountTotal(
@@ -64,7 +64,7 @@ class ExpenseController extends Controller
         request()->validate([
             'amount' => ['required'],
             'description' => ['required', 'max:255'],
-            'due_at' => ['required', 'date']
+            'due_at' => ['required', 'date_format:Y-m-d']
         ]);
 
         $group->update([
