@@ -1,11 +1,7 @@
 import '@/styles/globals.css'
 
 function App({ Component, pageProps }) {
-  return (
-    <div className="text-h5">
-      <Component {...pageProps} />
-    </div>
-  )
+  return <Component {...pageProps} />
 }
 
 export default App
