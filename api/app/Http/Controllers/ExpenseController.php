@@ -38,7 +38,7 @@ class ExpenseController extends Controller
             'due_at' => ['required', 'date']
         ]);
 
-        $group->update([
+        $group->increaseAmountTotal([
             'amount_total' => request()->get('amount_total')
         ]);
 
