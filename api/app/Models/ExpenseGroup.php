@@ -81,7 +81,9 @@ class ExpenseGroup extends Model
             'amount_total' => 0
         ];
         
-        return request()->user()->expenses()->save($attributes);
+        return request()->user()->expenses()->save(
+            new ExpenseGroup($attributes)
+        );
     }
 
     /**
