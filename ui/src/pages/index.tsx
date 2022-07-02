@@ -1,3 +1,5 @@
+import { ExpenseClerk } from '@/page-components/ExpenseClerk'
+
 export default function Home() {
   return (
     <div>
@@ -44,11 +46,10 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="flex w-1/4 justify-end">
-              <button className="bg-blue-500 text-white font-semibold px-24 py-8 mr-16 rounded hover:bg-blue-700 duration-100 ease-linear">
-                New Expenses
-              </button>
-              <button className="flex items-center justify-center bg-blue-200 w-[44px] rounded">
+            <div className="flex items-center justify-end w-1/4">
+              <ExpenseClerk />
+
+              <button className="flex items-center justify-center bg-blue-200 h-[44px] w-[44px] rounded">
                 <span className="font-semibold">KB</span>
               </button>
             </div>
