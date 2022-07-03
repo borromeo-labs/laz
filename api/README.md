@@ -1,6 +1,6 @@
 ## Laz API
 
-To proceed with the setup, install Docker.
+This codebase relies on Laravel Sail. To proceed, we require you to install Docker.
 
 ### Running API
 
@@ -42,11 +42,3 @@ sail artisan passport:client --password
 ```
 
 Copy the output's client id and secret.
-
-### Create an Admin User
-
-Go back to the `/api` directory, then run:
-
-```bash
-php artisan app:admin
-```
