@@ -12,13 +12,24 @@ This software is designed so that you only spend a minute a day to think out lou
 
 We minimize every interaction so there's little to no barrier to log your expenses.
 
-## Running Development Mode
+## Running Locally
 
-Go the `ui` folder then run:
+By default, we recommend you to consume the staging API.
+
+Go the `ui` folder then copy `.env` like so:
 
 ```bash
-npm install
-npm run dev
+cp .env.example .env.local
+```
+
+Copy its values from our private Discord server. Afterwards, you're good to go:
+
+```bash
+npm install && npm run dev
 ```
 
 Afterwards, open up `http://localhost:3000`.
+
+### Running API
+
+Check the `api` directory for more information.
