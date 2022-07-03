@@ -16,7 +16,14 @@ use App\Http\Controllers\BillController;
 |
 */
 
+Route::post('/auth/register', [AuthController::class, 'register']);
+
 Route::middleware('auth:api')->group(function () {
+    Route::get('/auth', [AuthController::class, 'user']);
+    Route::put('/auth/password', [AuthController::class, 'password']);
+    Route::put('/auth/profile', [AuthController::class, 'profile']);
+    Route::put('/auth/avatar', [AuthController::class, 'avatar']);
+
     Route::get('/expense-groups/{group}', [ExpenseController::class, 'show']);
     Route::post('/expense-groups/{group}/items', [ExpenseController::class, 'store']);
     Route::put('/expenses-groups/{group}/items/{item}', [ExpenseController::class, 'update']);
