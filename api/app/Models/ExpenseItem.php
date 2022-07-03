@@ -21,7 +21,17 @@ class ExpenseItem extends Model
         'due_at',
     ];
 
-    public function group() {
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'due_at' => 'date:Y-m-d'
+    ];
+
+    public function group()
+    {
         return $this->belongsTo(ExpenseGroup::class, 'group_id');
     }
 }

@@ -33,7 +33,7 @@ class ExpenseController extends Controller
     public function store(ExpenseGroup $group)
     {
         request()->validate([
-            'amount' => ['required'],
+            'amount' => ['required', 'numeric'],
             'description' => ['required', 'max:255'],
             'due_at' => ['required', 'date_format:Y-m-d']
         ]);
@@ -62,7 +62,7 @@ class ExpenseController extends Controller
     public function update(ExpenseGroup $group, ExpenseItem $item)
     {
         request()->validate([
-            'amount' => ['required'],
+            'amount' => ['required', 'numeric'],
             'description' => ['required', 'max:255'],
             'due_at' => ['required', 'date_format:Y-m-d']
         ]);

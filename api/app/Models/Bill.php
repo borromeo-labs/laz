@@ -22,14 +22,34 @@ class Bill extends Model
         'recur_interval',
     ];
 
-    public function user() {
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'is_enabled' => true,
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'recur_at' => 'date:Y-m-d'
+    ];
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
     /**
      * Check if bill is going to recur based on the interval
      */
-    public function isGoingToRecur(): bool {
+    public function isGoingToRecur(): bool
+    {
         $now = Carbon::now()->firstOfMonth();
 
         if ($this->recur_interval === 'annually') {

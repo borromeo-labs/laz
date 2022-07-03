@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ExpenseGroup extends Model
 {
@@ -19,7 +21,17 @@ class ExpenseGroup extends Model
         'user_id',
         'name',
         'amount_total',
-        'month'
+        'month',
+        'is_enabled'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'month' => 'date:Y-m'
     ];
 
     public function user()
@@ -57,6 +69,20 @@ class ExpenseGroup extends Model
     }
 
     /**
+     * Attribute to check if group is active
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function active(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => Carbon::now()->firstOfMonth()->equalTo(
+                Carbon::parse($attributes['month'])->firstOfMonth()
+            )
+        );
+    }
+
+    /**
      * Scope a query to only include active users.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -82,16 +108,18 @@ class ExpenseGroup extends Model
             return $instance;
         }
 
-        $dt = Carbon::parse($date);
-
-        $attributes = [
-            'name' => $dt->format('F y'),
-            'month' => $dt->firstOfMonth()->format('Y-m-d'),
+        $group = new ExpenseGroup([
+            'name' => Carbon::parse($date)->format('F y'),
+            'month' => Carbon::parse($date)->firstOfMonth()->format('Y-m-d'),
             'amount_total' => 0
-        ];
+        ]);
+
+        if (!$group->active) {
+            throw (new ModelNotFoundException)->setModel(ExpenseGroup::class);
+        }
 
         return request()->user()->expenses()->save(
-            new ExpenseGroup($attributes)
+            $group
         );
     }
 
@@ -112,7 +140,7 @@ class ExpenseGroup extends Model
                         $bill->amount
                     );
 
-                    $due = Carbon::now()->set($bill->recur_at->day)
+                    $due = Carbon::now()->set('day', $bill->recur_at->day)
                         ->format('Y-m-d');
 
                     $group->items()->save(
