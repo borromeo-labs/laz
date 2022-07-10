@@ -10,7 +10,7 @@ const ExpenseMonth: React.FC = () => {
       <div className="relative mx-auto max-w-[560px]">
         {/* Table Component */}
         {dates.map((group) => (
-          <div className="relative mx-auto max-w-[560px] static mb-[56px]" key={group.date}>
+          <div className="relative mb-[56px]" key={group.date}>
             <div className="flex items-center absolute -left-[360px]">
               <p className="font-semibold mr-[24px] w-[160px] text-right">{group.label}</p>
               <div className="h-[12px] w-[12px] bg-[#8A4FFF] rounded-full outline-8 outline-[#FAFBFF] outline z-timeline-circle"></div>
@@ -46,7 +46,7 @@ const ExpenseMonth: React.FC = () => {
           </div>
         ))}
 
-        <div className="h-screen w-px absolute top-0 -left-[171px] bg-[#B0B0B0]"></div>
+        <div className="w-px absolute top-0 bottom-0 -left-[171px] bg-[#B0B0B0]"></div>
       </div>
     </div>
   )
