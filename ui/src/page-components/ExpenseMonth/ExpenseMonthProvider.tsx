@@ -31,7 +31,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setDates(
       immer((draft) => {
         const group: DateGroup = draft.find((g) => g.date === item.due_at)
-        if (!group) fatal('Unable to insert item into the correct date group.')
+        if (!group) throw fatal('Unable to insert item into the correct date group.')
         group.items.push(item)
       })
     )
@@ -41,10 +41,10 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setDates(
       immer((draft) => {
         const group: DateGroup = draft.find((g) => g.date === item.due_at)
-        if (!group) fatal('Unable to replace item from the correct date group.')
+        if (!group) throw fatal('Unable to replace item from the correct date group.')
         console.log(current(group.items), id)
         const index = group.items.findIndex((item) => item.id === id)
-        if (index === -1) fatal('Unable to replace buffer item.')
+        if (index === -1) throw fatal('Unable to replace buffer item.')
         group.items[index] = item
       })
     )
@@ -54,7 +54,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setDates(
       immer((draft) => {
         const group: DateGroup = draft.find((g) => g.date === item.due_at)
-        if (!group) fatal('Unable to delete item from the correct date group.')
+        if (!group) throw fatal('Unable to delete item from the correct date group.')
         group.items = group.items.filter((i) => i.id !== item.id)
       })
     )
