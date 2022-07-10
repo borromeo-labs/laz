@@ -2,6 +2,7 @@ import { ExpenseClerk } from '@/page-components/ExpenseClerk'
 import { IoChevronForwardOutline } from 'react-icons/io5'
 import { IoChevronBackOutline } from 'react-icons/io5'
 import { IoCaretDownOutline } from 'react-icons/io5'
+import Avatar from 'boring-avatars'
 
 export default function Home() {
   return (
@@ -32,8 +33,13 @@ export default function Home() {
             <div className="flex items-center justify-end w-1/4">
               <ExpenseClerk />
 
-              <button className="flex items-center justify-center bg-blue-200 h-[44px] w-[44px] rounded">
-                <span className="font-semibold">KB</span>
+              <button className="flex items-center justify-center h-[48px] w-[48px] rounded">
+                <Avatar
+                  size={48}
+                  name="Mother Frances"
+                  variant="beam"
+                  colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+                />
               </button>
             </div>
           </div>
