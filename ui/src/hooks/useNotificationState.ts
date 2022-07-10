@@ -19,7 +19,7 @@ const useNotificationState = (ms: number): UseNotificationStateReturnType => {
 
     setKey((key) => key + 1)
 
-    timeoutRef.current = setTimeout(() => {
+    timeoutRef.current = window.setTimeout(() => {
       setIsVisible(false)
     }, ms)
   }
