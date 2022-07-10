@@ -1,9 +1,11 @@
 import React, { useContext, useMemo, useState } from 'react'
+import immer, { current } from 'immer'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
-import { format } from 'date-fns'
+import { format, isSameMonth } from 'date-fns'
 import { axios } from '@/axios'
-import { ExpenseGroup } from '@/types/api'
+import { fatal } from '@/utils'
+import { ExpenseGroup, ExpenseItem, ID, Uuid } from '@/types/api'
 import { ExpenseMonthContext, DateGroup } from './context'
 import { groupItemsByDate } from './utils'
 
@@ -23,7 +25,46 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     { onSuccess: (data) => setDates(groupItemsByDate(data)) }
   )
 
-  return <ExpenseMonthContext.Provider value={{ data, dates, isDataLoading }}>{children}</ExpenseMonthContext.Provider>
+  const insertItem = (item: ExpenseItem) => {
+    if (!isSameMonth(new Date(data?.month), new Date(item.due_at))) return
+
+    setDates(
+      immer((draft) => {
+        const group: DateGroup = draft.find((g) => g.date === item.due_at)
+        if (!group) fatal('Unable to insert item into the correct date group.')
+        group.items.push(item)
+      })
+    )
+  }
+
+  const replaceItem = (id: Uuid, item: ExpenseItem) => {
+    setDates(
+      immer((draft) => {
+        const group: DateGroup = draft.find((g) => g.date === item.due_at)
+        if (!group) fatal('Unable to replace item from the correct date group.')
+        console.log(current(group.items), id)
+        const index = group.items.findIndex((item) => item.id === id)
+        if (index === -1) fatal('Unable to replace buffer item.')
+        group.items[index] = item
+      })
+    )
+  }
+
+  const deleteItem = (item: ExpenseItem) => {
+    setDates(
+      immer((draft) => {
+        const group: DateGroup = draft.find((g) => g.date === item.due_at)
+        if (!group) fatal('Unable to delete item from the correct date group.')
+        group.items = group.items.filter((i) => i.id !== item.id)
+      })
+    )
+  }
+
+  return (
+    <ExpenseMonthContext.Provider value={{ data, dates, isDataLoading, insertItem, replaceItem, deleteItem }}>
+      {children}
+    </ExpenseMonthContext.Provider>
+  )
 }
 
 const useExpenseMonth = () => {

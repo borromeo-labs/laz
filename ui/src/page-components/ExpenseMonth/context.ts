@@ -1,5 +1,5 @@
-import React, { useContext, useState, useMemo } from 'react'
-import { ExpenseGroup, ExpenseItem } from '@/types/api'
+import { createContext } from 'react'
+import { ExpenseGroup, ExpenseItem, Uuid } from '@/types/api'
 
 export interface DateGroup {
   label: string
@@ -9,11 +9,14 @@ export interface DateGroup {
 }
 
 export interface ExpenseMonthContextType {
-  data: any
+  data: ExpenseGroup
   dates: DateGroup[]
   isDataLoading: boolean
+  insertItem: (item: ExpenseItem) => void
+  replaceItem: (uuid: Uuid, item: ExpenseItem) => void
+  deleteItem: (item: ExpenseItem) => void
 }
 
-const ExpenseMonthContext = React.createContext<ExpenseMonthContextType>({} as ExpenseMonthContextType)
+const ExpenseMonthContext = createContext<ExpenseMonthContextType>({} as ExpenseMonthContextType)
 
 export { ExpenseMonthContext }

@@ -1,12 +1,8 @@
 import { AppLayout } from '@/page-components/AppLayout'
-import { ExpenseMonth, ExpenseMonthProvider } from '@/page-components/ExpenseMonth'
+import { ExpenseMonth } from '@/page-components/ExpenseMonth'
 
 export default function Home() {
-  return (
-    <ExpenseMonthProvider>
-      <ExpenseMonth />
-    </ExpenseMonthProvider>
-  )
+  return <ExpenseMonth />
 }
 
 Home.getLayout = (app) => {
