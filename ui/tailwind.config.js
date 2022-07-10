@@ -33,7 +33,8 @@ module.exports = {
 
     zIndex: {
       'modal-backdrop': 1000,
-      'modal-content': 1001
+      'modal-content': 1001,
+      'timeline-circle': 1
     },
 
     extend: {}
