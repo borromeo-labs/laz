@@ -7,7 +7,7 @@ import { axios } from '@/axios'
 import { fatal } from '@/utils'
 import { ExpenseGroup, ExpenseItem, ID, Uuid } from '@/types/api'
 import { ExpenseMonthContext, DateGroup } from './context'
-import { groupItemsByDate } from './utils'
+import { groupItemsByDate, getDateGroupTotal } from './utils'
 
 const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { query } = useRouter()
@@ -33,6 +33,8 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const group: DateGroup = draft.find((g) => g.date === item.due_at)
         if (!group) throw fatal('Unable to insert item into the correct date group.')
         group.items.push(item)
+        // @TODO: We probably should calculate this on our render function instead
+        group.total = getDateGroupTotal(group.items)
       })
     )
   }
@@ -56,6 +58,8 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const group: DateGroup = draft.find((g) => g.date === item.due_at)
         if (!group) throw fatal('Unable to delete item from the correct date group.')
         group.items = group.items.filter((i) => i.id !== item.id)
+        // @TODO: We probably should calculate this on our render function instead
+        group.total = getDateGroupTotal(group.items)
       })
     )
   }

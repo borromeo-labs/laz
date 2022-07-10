@@ -13,9 +13,13 @@ const groupItemsByDate = (group: ExpenseGroup): DateGroup[] => {
     const date = format(d, 'yyyy-MM-dd')
     const label = format(d, 'LLLL d, EEEE')
     const items = date in groups ? groups[date] : []
-    const total = date in groups ? items.reduce((total, item) => total + item.amount, 0) : 0
+    const total = date in groups ? getDateGroupTotal(items) : 0
     return { label, date, total, items }
   })
 }
 
-export { groupItemsByDate }
+const getDateGroupTotal = (items: ExpenseItem[]): number => {
+  return items.reduce((total, item) => total + item.amount, 0)
+}
+
+export { groupItemsByDate, getDateGroupTotal }
