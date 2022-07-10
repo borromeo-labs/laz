@@ -36,7 +36,7 @@ export default function Home() {
             <div className="flex items-center justify-end w-1/4">
               <ExpenseClerk />
 
-              <button className="flex items-center justify-center h-[48px] w-[48px] rounded">
+              <button className="flex items-center justify-center h-[48px] w-[48px]">
                 <Avatar
                   size={48}
                   name='Mother Frances'
