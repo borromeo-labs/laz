@@ -1,4 +1,6 @@
-type ID = number
+export type Uuid = string
+
+export type ID = number | Uuid
 
 export interface User {
   name: string
@@ -11,16 +13,18 @@ export interface User {
 export interface ExpenseItem {
   id: ID
   group_id: ID
-  group: ExpenseGroup
+  group?: ExpenseGroup
   amount: number
   description: string
   due_at: string
+  created_at: string
+  updated_at: string
 }
 
 export interface ExpenseGroup {
   id: ID
   user_id: ID
-  user: User
+  user?: User
   name: string
   month: string
   amount_total: number
