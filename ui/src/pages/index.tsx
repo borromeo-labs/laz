@@ -15,15 +15,18 @@ export default function Home() {
 
             <div className="flex justify-center w-half">
               <button className="px-12 py-8 mr-8 rounded hover:bg-slate-200 duration-100 ease-linear">
-                <IoChevronBackOutline  />
+                <IoChevronBackOutline 
+                  size={24} />
               </button>
 
               <button className="px-12 py-8 mr-12 rounded hover:bg-slate-200 duration-100 ease-linear">
-                <IoChevronForwardOutline  />
+                <IoChevronForwardOutline 
+                  size={24} 
+                />
               </button>
 
               <button className="flex items-center px-16 py-8 rounded hover:bg-slate-200 duration-100 ease-linear">
-                <p className="font-sans text-xl mr-8">June 2022</p>
+                <p className="font-sans text-h4 mr-8">June 2022</p>
                 <i>
                   <IoCaretDownOutline />
                 </i>
