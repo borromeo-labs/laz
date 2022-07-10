@@ -41,4 +41,13 @@ sail artisan install
 sail artisan passport:client --password
 ```
 
-Copy the output's client id and secret.
+Copy the output's client id and secret as we'll use it in the next step:
+
+If you haven't setup `.env` file for the `ui` directory, you can do so by:
+
+```bash
+cd ../ui
+cp .env.example .env
+```
+
+Open up `.env` then update the values of `OAUTH_CLIENT_ID` and `OAUTH_CLIENT_SECRET` based on the output

@@ -14,8 +14,6 @@ We minimize every interaction so there's little to no barrier to log your expens
 
 ## Running Locally
 
-By default, we recommend you to consume the staging API.
-
 Go the `ui` folder then copy `.env` like so:
 
 ```bash
@@ -32,4 +30,6 @@ Afterwards, open up `http://localhost:3000`.
 
 ### Running API
 
-Check the `api` directory for more information.
+By default, we recommend you to consume the staging API.
+
+If you plan on running the API locally, check the `api` directory for more information.
