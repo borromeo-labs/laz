@@ -19,7 +19,7 @@ use App\Http\Controllers\BillController;
 Route::post('/auth/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('/auth', [AuthController::class, 'user']);
+    Route::get('/auth/user', [AuthController::class, 'user']);
     Route::put('/auth/password', [AuthController::class, 'password']);
     Route::put('/auth/profile', [AuthController::class, 'profile']);
     Route::put('/auth/avatar', [AuthController::class, 'avatar']);
