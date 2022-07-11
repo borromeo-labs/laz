@@ -3,11 +3,10 @@ export type Uuid = string
 export type ID = number | Uuid
 
 export interface User {
+  id: ID
   name: string
   email: string
   avatar: string
-  expenses: ExpenseGroup[]
-  bills: Bill[]
 }
 
 export interface ExpenseItem {

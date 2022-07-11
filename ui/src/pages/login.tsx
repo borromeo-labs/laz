@@ -1,4 +1,5 @@
 import React from 'react'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 
 import { useForm, Controller } from 'react-hook-form'
@@ -9,18 +10,24 @@ import { AuthLayout } from '@/page-components/AuthLayout'
 import { Button, TextInput } from '@/components'
 
 const schema = Yup.object({
-  email: Yup.string().email().required(),
+  username: Yup.string().email().required(),
   password: Yup.string().required()
 })
 
+type LoginFormValues = Yup.InferType<typeof schema>
+
 export default function Login() {
-  const { control, handleSubmit, formState, setValue, reset } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: 'onChange',
     defaultValues: {
-      email: '',
+      username: '',
       password: ''
     },
     resolver: resolver(schema)
+  })
+
+  const onSubmit = handleSubmit((values: LoginFormValues) => {
+    signIn('credentials', values)
   })
 
   return (
@@ -37,28 +44,30 @@ export default function Login() {
 
       <div className="h-[1px] bg-slate-100 my-24"></div>
 
-      <div className="space-y-16">
-        <Controller
-          control={control}
-          name="email"
-          render={({ field }) => <TextInput {...field} label="Email" type="email" />}
-        />
+      <form onSubmit={onSubmit}>
+        <div className="space-y-16">
+          <Controller
+            control={control}
+            name="username"
+            render={({ field }) => <TextInput {...field} label="Email" type="email" />}
+          />
 
-        <Controller
-          control={control}
-          name="password"
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              label="Password"
-              type="password"
-              helper={{ url: '/password-reset', label: 'Reset password' }}
-            />
-          )}
-        />
+          <Controller
+            control={control}
+            name="password"
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                label="Password"
+                type="password"
+                helper={{ url: '/password-reset', label: 'Reset password' }}
+              />
+            )}
+          />
 
-        <Button type="submit">Sign in</Button>
-      </div>
+          <Button type="submit">Sign in</Button>
+        </div>
+      </form>
     </>
   )
 }
