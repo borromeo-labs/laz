@@ -12,7 +12,7 @@ const ExpenseMonth: React.FC = () => {
         {dates.map((group) => (
           <div className="relative mb-[56px]" key={group.date}>
             <div className="flex items-center absolute -left-[360px]">
-              <p className="font-semibold mr-[24px] w-[160px] text-right">{group.label}</p>
+              <p className="text-neutral-600 font-semibold mr-[24px] w-[160px] text-right">{group.label}</p>
               <div className="h-12 w-12 bg-primary-500 rounded-full outline-8 outline-[#F8FAFC] outline z-timeline-circle"></div>
             </div>
 
