@@ -45,7 +45,7 @@ const ExpenseMonth: React.FC = () => {
                     className="w-full group-last:rounded-br-[8px] group-last:border-b-0 px-16 py-8 border-r border-b border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ring-inset"></input>
                 </div>
               ))}
-              <button className="flex w-full items-center text-neutral-500 p-8 hover:text-primary-500">
+              <button className="flex w-full items-center text-neutral-500 p-8 hover:text-primary-500 duration-200">
                 <IoAddSharp className="mr-8" size="20" />
                 Add expenses
               </button>
