@@ -16,12 +16,12 @@ function SelectMenu({ children, items }) {
         leave="transition ease-in duration-75"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95">
-        <Menu.Items className="absolute right-0 top-48 mt-8 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute px-[4px] py-8 right-0 top-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {items.map((item) => (
             <Menu.Item>
               {({ active }) => (
                 <a
-                  className={`flex items-center w-[224px] border-neutral-200 p-12 duration-200 ${
+                  className={`flex items-center w-[224px] rounded border-neutral-200 p-12 duration-200 ${
                     active && 'bg-primary-100'
                   }`}
                   href={item.url}>

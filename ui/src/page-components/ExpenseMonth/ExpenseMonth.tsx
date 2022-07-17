@@ -1,4 +1,5 @@
 import React from 'react'
+import { IoAddSharp } from 'react-icons/io5'
 import { formatCurrency } from '@/utils'
 import { useExpenseMonth } from './ExpenseMonthProvider'
 
@@ -28,7 +29,9 @@ const ExpenseMonth: React.FC = () => {
                 <div className="shrink-0 w-[160px] bg-neutral-200 text-neutral-600 px-16 py-12 text-h6 font-semibold border-r border-neutral-400">
                   Amount
                 </div>
-                <div className="bg-neutral-200 text-neutral-500 px-16 py-12 text-h6 font-semibold w-full">Description</div>
+                <div className="bg-neutral-200 text-neutral-500 px-16 py-12 text-h6 font-semibold w-full">
+                  Description
+                </div>
               </div>
 
               {/* Table Items */}
@@ -42,6 +45,10 @@ const ExpenseMonth: React.FC = () => {
                     className="w-full group-last:rounded-br-[8px] group-last:border-b-0 px-16 py-8 border-r border-b border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ring-inset"></input>
                 </div>
               ))}
+              <button className="flex w-full items-center text-neutral-500 p-8 hover:text-primary-500">
+                <IoAddSharp className="mr-8" size="20" />
+                Add expenses
+              </button>
             </div>
           </div>
         ))}
