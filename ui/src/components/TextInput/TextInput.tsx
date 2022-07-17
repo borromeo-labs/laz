@@ -16,11 +16,11 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     return (
       <div>
         {Boolean(label) && (
-          <div className="flex justify-between items-center mb-[8px]">
-            <label className="text-h6 font-semibold mb-[8px]">{label}</label>
+          <div className="flex justify-between items-center mb-8">
+            <label className="text-h6 font-semibold">{label}</label>
             {Boolean(helper) && (
               <Link href={helper.url} passHref>
-                <a className="text-h6 text-blue-500 underline cursor-pointer">{helper.label}</a>
+                <a className="text-h6 text-primary-500 underline cursor-pointer">{helper.label}</a>
               </Link>
             )}
           </div>
@@ -30,7 +30,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {...props}
           type={type}
           ref={ref}
-          className="w-full px-16 py-12 bg-neutral-200 rounded mb-24 hover:bg-white hover:outline-none hover:border-[1px] hover:border-primary-500 hover:border-solid hover:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] focus:bg-white focus:bg-white focus:border-[1px] focus:border-primary-500 focus:border-solid focus:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] focus:outline-none duration-200"
+          className="w-full px-16 py-12 bg-neutral-200 outline-none rounded border border-neutral-200 hover:bg-white hover:outline-none hover:border hover:border-primary-500 hover:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] focus:bg-white focus:border focus:border-primary-500 focus:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] duration-200"
         />
       </div>
     )
