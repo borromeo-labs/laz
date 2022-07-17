@@ -17,6 +17,7 @@ module.exports = {
       16: '16px',
       24: '24px',
       32: '32px',
+      40: '40px',
       48: '48px',
       56: '56px',
       64: '64px'
@@ -37,7 +38,8 @@ module.exports = {
       'timeline-circle': 1
     },
 
-    extend: {}
+    extend: {
+    }
   },
   plugins: []
 }

@@ -26,18 +26,18 @@ export default function Login() {
   return (
     <>
       <div>
+        <h3 className="text-h3 font-semibold">Sign in</h3>
         <p>
           Don't have an account?{' '}
           <Link href="/register" passHref>
             <a className="text-blue-500 cursor-pointer">Sign up</a>
           </Link>
         </p>
-        <h3 className="text-h3 font-semibold">Sign in</h3>
       </div>
 
       <div className="h-[1px] bg-slate-100 my-24"></div>
 
-      <div className="space-y-16">
+      <div>
         <Controller
           control={control}
           name="email"
