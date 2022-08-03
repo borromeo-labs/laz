@@ -59,7 +59,8 @@ module.exports = {
       },
 
       white: '#fff',
-      black: '#000'
+      black: '#000',
+      transparent: 'transparent'
     },
 
     spacing: {
