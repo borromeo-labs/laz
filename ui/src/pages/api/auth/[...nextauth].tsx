@@ -13,8 +13,6 @@ const credentials = CredentialsProvider({
     password: { label: 'Password', type: 'password' }
   },
   async authorize(credentials, req) {
-    console.log('Authorize', credentials)
-
     const response = await instance.post('/oauth/token', {
       username: credentials?.username,
       password: credentials?.password,
@@ -23,7 +21,7 @@ const credentials = CredentialsProvider({
       client_secret: process.env.OAUTH_CLIENT_SECRET
     })
 
-    console.log(response)
+    console.log('Authorize', response.data)
 
     return (
       await instance.get('/auth/user', {
@@ -35,7 +33,12 @@ const credentials = CredentialsProvider({
 
 const callbacks: Partial<CallbacksOptions> = {
   async signIn({ user, credentials }) {
-    console.log('SignIn')
+    // @TODO Leaving this here for now.
+    // Some references I used had both authorize (see above) and
+    // this callback function, and I honestly don't understand why.
+    // Let's figure out later.
+    console.log('Sign In')
+
     const response = await instance.post('/oauth/token', {
       username: credentials?.username,
       password: credentials?.password,
@@ -50,7 +53,10 @@ const callbacks: Partial<CallbacksOptions> = {
   },
 
   async session({ session, token }) {
+    // @TODO Leaving this here: for some reason, this callback
+    // gets called multiple times in a single request. That's not good.
     console.log('Session')
+
     session.accessToken = token.accessToken
     const response = await instance.get('/auth/user', {
       headers: { Authorization: `Bearer ${session.accessToken}` }
@@ -60,7 +66,10 @@ const callbacks: Partial<CallbacksOptions> = {
   },
 
   async jwt({ user, token }) {
+    // @TODO Leaving this here: for some reason, this callback
+    // gets called multiple times in a single request. That's not good.
     console.log('JWT')
+
     if (user) return { accessToken: user.accessToken }
     return token
   }

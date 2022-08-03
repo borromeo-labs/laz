@@ -1,10 +1,8 @@
 import React from 'react'
 import { formatCurrency } from '@/utils'
-import { useSession } from 'next-auth/react'
 import { useExpenseMonth } from './ExpenseMonthProvider'
 
 const ExpenseMonth: React.FC = () => {
-  console.log(useSession())
   const { dates } = useExpenseMonth()
 
   return (

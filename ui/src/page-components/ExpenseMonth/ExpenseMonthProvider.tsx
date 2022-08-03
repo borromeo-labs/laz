@@ -3,16 +3,19 @@ import immer, { current } from 'immer'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { format, isSameMonth } from 'date-fns'
-import { axios } from '@/axios'
+import { useAxios } from '@/contexts/Axios'
 import { fatal } from '@/utils'
 import { ExpenseGroup, ExpenseItem, ID, Uuid } from '@/types/api'
 import { ExpenseMonthContext, DateGroup } from './context'
 import { groupItemsByDate, getDateGroupTotal } from './utils'
 
+// @TODO: Let's movethis under contexts/ folder
 const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { query } = useRouter()
 
   const [dates, setDates] = useState<DateGroup[]>([])
+
+  const { axios } = useAxios()
 
   const date = useMemo(() => {
     const base = query.date ? new Date(String(query.date)) : new Date()

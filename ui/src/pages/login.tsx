@@ -27,7 +27,10 @@ export default function Login() {
   })
 
   const onSubmit = handleSubmit((values: LoginFormValues) => {
-    signIn('credentials', values)
+    signIn('credentials', {
+      redirect: false,
+      ...values
+    })
   })
 
   return (

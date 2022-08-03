@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import { axios } from '@/axios'
+import { useAxios } from '@/contexts/Axios'
 import { ExpenseGroup, Uuid } from '@/types/api'
 import { useExpenseMonth } from '@/page-components/ExpenseMonth'
 import { v4 as uuid } from 'uuid'
@@ -29,6 +29,8 @@ interface ExpenseGroupCreateResponse {
 
 const useExpenseGroupCreateMutation = ({ group }: ExpenseGroupParams) => {
   const { insertItem, replaceItem, deleteItem } = useExpenseMonth()
+
+  const { axios } = useAxios()
 
   const { mutate: mutationFn, ...mutationData } = useMutation<
     ExpenseGroupCreateResponse,
