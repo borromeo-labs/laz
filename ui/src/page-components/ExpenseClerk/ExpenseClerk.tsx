@@ -94,7 +94,7 @@ const ExpenseClerk = () => {
               render={({ field }) => (
                 <input
                   type="text"
-                  className="block w-full px-16 py-12 placeholder-neutral-500 border-none outline-0"
+                  className="block w-full px-16 py-12 placeholder-neutral-400 border-none outline-0"
                   placeholder="Type something like “1000 grab”"
                   ref={field.ref}
                   value={field.value}
