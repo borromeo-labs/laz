@@ -74,7 +74,7 @@ const callbacks: Partial<CallbacksOptions> = {
   }
 }
 
-export default NextAuth({
+export const authOptions = {
   providers: [credentials],
   callbacks,
   secret: process.env.OAUTH_CLIENT_SECRET,
@@ -83,4 +83,6 @@ export default NextAuth({
     signOut: '/logout',
     newUser: '/register'
   }
-})
+}
+
+export default NextAuth(authOptions)

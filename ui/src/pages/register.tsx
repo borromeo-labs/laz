@@ -11,7 +11,8 @@ import * as Yup from 'yup'
 
 import { AuthLayout } from '@/page-components/AuthLayout'
 import { Button, TextInput } from '@/components'
-import { replace } from 'lodash'
+
+import { getGuardedRoutesServerProps } from '@/server'
 
 const schema = Yup.object({
   email: Yup.string().email().required(),
@@ -119,3 +120,5 @@ export default function Register() {
 Register.getLayout = (app) => {
   return <AuthLayout>{app}</AuthLayout>
 }
+
+export const getServerSideProps = getGuardedRoutesServerProps

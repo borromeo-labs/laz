@@ -1,5 +1,6 @@
 import { AppLayout } from '@/page-components/AppLayout'
 import { ExpenseMonth } from '@/page-components/ExpenseMonth'
+import { getGuardedRoutesServerProps } from '@/server'
 
 export default function Home() {
   return <ExpenseMonth />
@@ -8,3 +9,5 @@ export default function Home() {
 Home.getLayout = (app) => {
   return <AppLayout>{app}</AppLayout>
 }
+
+export const getServerSideProps = getGuardedRoutesServerProps

@@ -11,6 +11,8 @@ import { AuthLayout } from '@/page-components/AuthLayout'
 import { Button, TextInput } from '@/components'
 import { useMutation } from 'react-query'
 
+import { getGuardedRoutesServerProps } from '@/server'
+
 const schema = Yup.object({
   username: Yup.string().email().required(),
   password: Yup.string().required()
@@ -101,3 +103,5 @@ export default function Login() {
 Login.getLayout = (app) => {
   return <AuthLayout>{app}</AuthLayout>
 }
+
+export const getServerSideProps = getGuardedRoutesServerProps
