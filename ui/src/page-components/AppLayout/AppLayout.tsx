@@ -11,6 +11,7 @@ import {
   IoLogOut
 } from 'react-icons/io5'
 import { ExpenseClerk } from '@/page-components/ExpenseClerk'
+import { signOut } from 'next-auth/react'
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -56,7 +57,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 },
                 {
                   label: 'Logout',
-                  url: '/',
+                  onClick: () => signOut({ redirect: '/login' }),
                   icon: <IoLogOut className="mr-12" color="#8A4FFF" size="20" />
                 }
               ]}>

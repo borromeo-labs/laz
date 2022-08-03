@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useState } from 'react'
 import immer, { current } from 'immer'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
+import { useSession } from 'next-auth/react'
 import { format, isSameMonth } from 'date-fns'
 import { useAxios } from '@/contexts/Axios'
 import { fatal } from '@/utils'
@@ -12,6 +13,8 @@ import { groupItemsByDate, getDateGroupTotal } from './utils'
 // @TODO: Let's movethis under contexts/ folder
 const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { query } = useRouter()
+
+  const { data: user } = useSession()
 
   const [dates, setDates] = useState<DateGroup[]>([])
 
@@ -25,7 +28,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { data, isLoading: isDataLoading } = useQuery<ExpenseGroup>(
     ['expense-groups', date],
     async () => (await axios.get(`/expense-groups/${date}`)).data.expense_group,
-    { onSuccess: (data) => setDates(groupItemsByDate(data)) }
+    { enabled: Boolean(user), onSuccess: (data) => setDates(groupItemsByDate(data)) }
   )
 
   const insertItem = (item: ExpenseItem) => {

@@ -1,13 +1,34 @@
+import React from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
-import cx from 'classnames'
+import { Fragment } from 'react'
+
+interface SelectMenuItem {
+  icon: string
+  label: string
+  url?: string
+  onClick?: () => void
+}
+
+interface SelectMenuProps {
+  items: SelectMenuItem[]
+  children: React.ReactNode
+}
 
 function SelectMenu({ children, items }) {
+  const makeClickHandler = (item: SelectMenuItem) => {
+    return (evt: React.MouseEvent<HTMLAnchorElement>) => {
+      if (!item.onClick) return
+      evt.stopPropagation()
+      item.onClick()
+    }
+  }
+
   return (
     <Menu
       as="div"
       className="relative flex justify-center items-center w-48 h-48 rounded hover:bg-neutral-200 duration-150">
       <Menu.Button>{children}</Menu.Button>
+
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
@@ -24,7 +45,8 @@ function SelectMenu({ children, items }) {
                   className={`flex items-center w-[224px] rounded border-neutral-200 p-12 duration-200 ${
                     active && 'bg-primary-100'
                   }`}
-                  href={item.url}>
+                  href={item.url}
+                  onClick={makeClickHandler(item)}>
                   {item.icon}
                   {item.label}
                 </a>

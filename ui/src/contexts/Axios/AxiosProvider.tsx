@@ -15,7 +15,7 @@ const AxiosProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     return axios.create({ baseURL: config.api.baseUrl })
   })
 
-  const { data } = useSession()
+  const { data, status } = useSession()
 
   useInterceptor(instance, (config) => {
     if (data?.accessToken) {
@@ -26,7 +26,7 @@ const AxiosProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     return config
   })
 
-  return <Context.Provider value={{ axios: instance }}>{data?.user ? children : null}</Context.Provider>
+  return <Context.Provider value={{ axios: instance }}>{status === 'loading' ? null : children}</Context.Provider>
 }
 
 const useAxios = () => {
