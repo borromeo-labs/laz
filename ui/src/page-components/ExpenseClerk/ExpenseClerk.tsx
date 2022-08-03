@@ -15,7 +15,7 @@ import { parseExpenseString } from './utils'
 
 const schema = Yup.object({
   amount: Yup.number().positive().integer().required(),
-  description: Yup.string().required()
+  description: Yup.string().required(),
 })
 
 const ExpenseClerk = () => {
@@ -28,9 +28,9 @@ const ExpenseClerk = () => {
     defaultValues: {
       input: '',
       amount: 0,
-      description: ''
+      description: '',
     },
-    resolver: resolver(schema)
+    resolver: resolver(schema),
   })
 
   const group = useMemo(() => {
@@ -55,7 +55,7 @@ const ExpenseClerk = () => {
   const onSubmit = (values) => {
     mutate({
       ...values,
-      due_at: dueAt
+      due_at: dueAt,
     })
 
     setIsSuccess()
@@ -65,7 +65,7 @@ const ExpenseClerk = () => {
 
   const input = useWatch({
     control,
-    name: 'input'
+    name: 'input',
   })
 
   useEffect(() => {
@@ -87,14 +87,14 @@ const ExpenseClerk = () => {
 
       <Modal isOpen={isOpen} onClose={handleClose} title="New Expenses for Today">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center bg-neutral-200 rounded focus-within:ring-2 ring-offset-2 ring-blue-500">
+          <div className="flex items-center bg-neutral-200 outline-none rounded border border-neutral-200 hover:bg-white hover:outline-none hover:border hover:border-primary-500 hover:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] focus:bg-white focus:border focus:border-primary-500 focus:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] duration-200">
             <Controller
               control={control}
               name="input"
               render={({ field }) => (
                 <input
                   type="text"
-                  className="block w-full px-16 py-12 placeholder-neutral-500 bg-transparent border-none outline-0"
+                  className="block w-full px-16 py-12 placeholder-neutral-500 border-none outline-0"
                   placeholder="Type something like “1000 grab”"
                   ref={field.ref}
                   value={field.value}
