@@ -60,7 +60,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 },
                 {
                   label: 'Logout',
-                  onClick: () => signOut({ redirect: '/login' }),
+                  onClick: () => signOut({ redirect: true }),
                   icon: <IoLogOut className="mr-12" color="#8A4FFF" size="20" />
                 }
               ]}>
