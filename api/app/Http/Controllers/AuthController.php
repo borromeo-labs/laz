@@ -10,7 +10,7 @@ class AuthController extends Controller
     {
         request()->validate([
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|confirmed',
             'name' => 'required'
         ]);
 
