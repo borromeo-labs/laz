@@ -28,7 +28,7 @@ class AuthController extends Controller
     public function user()
     {
         return response()->json([
-            'user' => request()->user
+            'user' => request()->user()
         ]);
     }
 
@@ -44,7 +44,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'user' => request()->user
+            'user' => request()->user()
         ]);
     }
 
@@ -59,7 +59,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'user' => request()->user
+            'user' => request()->user()
         ]);
     }
 
@@ -70,7 +70,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'user' => request()->user
+            'user' => request()->user()
         ]);
     }
 }
