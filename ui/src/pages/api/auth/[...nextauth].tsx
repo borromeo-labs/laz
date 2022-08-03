@@ -1,9 +1,10 @@
 import axios from 'axios'
 import NextAuth, { CallbacksOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { config } from '@/config'
 
 const instance = axios.create({
-  baseURL: process.env.API_URL
+  baseURL: config.api.baseUrl
 })
 
 const credentials = CredentialsProvider({
@@ -17,8 +18,8 @@ const credentials = CredentialsProvider({
       username: credentials?.username,
       password: credentials?.password,
       grant_type: 'password',
-      client_id: process.env.OAUTH_CLIENT_ID,
-      client_secret: process.env.OAUTH_CLIENT_SECRET
+      client_id: config.api.oauthClientId,
+      client_secret: config.api.oauthClientSecret
     })
 
     console.log('Authorize', response.data)
@@ -43,8 +44,8 @@ const callbacks: Partial<CallbacksOptions> = {
       username: credentials?.username,
       password: credentials?.password,
       grant_type: 'password',
-      client_id: process.env.OAUTH_CLIENT_ID,
-      client_secret: process.env.OAUTH_CLIENT_SECRET
+      client_id: process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID,
+      client_secret: process.env.NEXT_PUBLIC_OAUTH_CLIENT_SECRET
     })
 
     user.accessToken = response.data.access_token

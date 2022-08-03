@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import React, { createContext, useContext, useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { config } from '@/config'
 import { useInterceptor } from './useInterceptor'
 
 const Context = createContext<{ axios: AxiosInstance }>({
@@ -10,8 +11,8 @@ const Context = createContext<{ axios: AxiosInstance }>({
 // @TODO: we probably should rename this to AuthProvider as we're
 // doing more than just sharing the axios instance (e.g., hiding as session is loading)
 const AxiosProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [instance, setInstance] = useState<AxiosInstance>(() => {
-    return axios.create({ baseURL: process.env.API_URL })
+  const [instance] = useState<AxiosInstance>(() => {
+    return axios.create({ baseURL: config.api.baseUrl })
   })
 
   const { data } = useSession()
