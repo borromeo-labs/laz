@@ -10,10 +10,13 @@ import {
   IoPersonSharp,
   IoLogOut
 } from 'react-icons/io5'
+import { useSession } from 'next-auth/react'
 import { ExpenseClerk } from '@/page-components/ExpenseClerk'
 import { signOut } from 'next-auth/react'
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { data } = useSession()
+
   return (
     <div className="flex-col bg-[#FAFBFF]">
       {/* Navbar */}
@@ -64,7 +67,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <div>
                 <Avatar
                   size={32}
-                  name="Mother Frances"
+                  name={data.user.email}
                   variant="beam"
                   colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
                 />

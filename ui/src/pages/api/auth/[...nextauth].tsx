@@ -22,8 +22,6 @@ const credentials = CredentialsProvider({
       client_secret: config.api.oauthClientSecret
     })
 
-    console.log('Authorize', response.data)
-
     return (
       await instance.get('/auth/user', {
         headers: { Authorization: `Bearer ${response.data.access_token}` }

@@ -14,7 +14,7 @@ import { groupItemsByDate, getDateGroupTotal } from './utils'
 const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { query } = useRouter()
 
-  const { data: user } = useSession()
+  const { data: session } = useSession()
 
   const [dates, setDates] = useState<DateGroup[]>([])
 
@@ -28,7 +28,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { data, isLoading: isDataLoading } = useQuery<ExpenseGroup>(
     ['expense-groups', date],
     async () => (await axios.get(`/expense-groups/${date}`)).data.expense_group,
-    { enabled: Boolean(user), onSuccess: (data) => setDates(groupItemsByDate(data)) }
+    { enabled: Boolean(session.user), onSuccess: (data) => setDates(groupItemsByDate(data)) }
   )
 
   const insertItem = (item: ExpenseItem) => {

@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
 interface SelectMenuItem {
-  icon: string
+  icon: React.ReactElement
   label: string
   url?: string
   onClick?: () => void
@@ -14,7 +14,7 @@ interface SelectMenuProps {
   children: React.ReactNode
 }
 
-function SelectMenu({ children, items }) {
+const SelectMenu: React.FC<SelectMenuProps> = ({ children, items }) => {
   const makeClickHandler = (item: SelectMenuItem) => {
     return (evt: React.MouseEvent<HTMLAnchorElement>) => {
       if (!item.onClick) return
