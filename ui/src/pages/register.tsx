@@ -37,14 +37,14 @@ export default function Register() {
         <p>
           Already have an account?{' '}
           <Link href="/login" passHref>
-            <a className="text-blue-500 cursor-pointer">Sign in</a>
+            <a className="text-primary-500 cursor-pointer">Sign in</a>
           </Link>
         </p>
       </div>
 
-      <div className="h-[1px] bg-slate-100 my-24"></div>
+      <div className="h-[1px] bg-neutral-200 my-24"></div>
 
-      <div className="space-y-16">
+      <div className="space-y-24">
         <Controller
           control={control}
           name="email"
