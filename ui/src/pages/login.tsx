@@ -66,9 +66,10 @@ export default function Login() {
       <div className="h-[1px] bg-neutral-200 my-24"></div>
 
       <form onSubmit={onSubmit}>
-        {Boolean(error) && <div className="mb-24 text-red-400 p-4">Incorrecat username or password</div>}
-
         <div className="space-y-24">
+          {/* @TODO: https://linear.app/borromeo-labs/issue/BOR-60/improve-design-for-errors */}
+          {Boolean(error) && <div className="text-red-400 p-4">Incorrecat username or password</div>}
+
           <Controller
             control={control}
             name="username"
