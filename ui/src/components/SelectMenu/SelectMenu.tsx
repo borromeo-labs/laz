@@ -1,6 +1,7 @@
 import React from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
+import cx from 'classnames'
 
 interface SelectMenuItem {
   icon: React.ReactElement
@@ -42,9 +43,12 @@ const SelectMenu: React.FC<SelectMenuProps> = ({ children, items }) => {
             <Menu.Item>
               {({ active }) => (
                 <a
-                  className={`flex items-center w-[224px] rounded border-neutral-200 p-12 duration-200 ${
-                    active && 'bg-primary-100'
-                  }`}
+                  className={cx(
+                    `flex items-center w-[224px] rounded border-neutral-200 p-12 duration-200 cursor-pointer`,
+                    {
+                      'bg-primary-100': active
+                    }
+                  )}
                   href={item.url}
                   onClick={makeClickHandler(item)}>
                   {item.icon}
