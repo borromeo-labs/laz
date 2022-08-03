@@ -101,10 +101,15 @@ class ExpenseGroup extends Model
 
     /**
      * Create the expense group if requested month is current month
+     * 
+     * @TODO: We should probably add a new function on query builder instead of hard-coding things here.
+     * Alternatively, we can make a service class.
      */
     public static function firstOrCreateOnDemand($date)
     {
-        if (!is_null($instance = static::month($date)->first())) {
+        $instance = request()->user()->expenses()->month($date)->first();
+
+        if (!is_null($instance)) {
             return $instance;
         }
 
