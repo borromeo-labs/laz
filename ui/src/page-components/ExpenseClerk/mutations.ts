@@ -38,11 +38,12 @@ const useExpenseGroupCreateMutation = ({ group }: ExpenseGroupParams) => {
     ExpenseGroupCreateInputVariables
   >(['expenses-groups', group, 'items'], (values) => axios.post(`/expense-groups/${group}/items`, values), {
     onSuccess: (_, variables) => {
+      // @FIX: I found that this isn't working properly
       replaceItem(variables.id, variables)
     },
     onError: (_, variables) => {
       deleteItem(variables)
-    }
+    },
   })
 
   const mutate = (input: ExpenseGroupCreateOriginalVariables) => {
@@ -53,7 +54,7 @@ const useExpenseGroupCreateMutation = ({ group }: ExpenseGroupParams) => {
       description: input.description,
       due_at: input.due_at,
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     }
 
     mutationFn(item)

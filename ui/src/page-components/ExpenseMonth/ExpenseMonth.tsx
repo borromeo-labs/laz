@@ -2,6 +2,7 @@ import React from 'react'
 import { IoAddSharp } from 'react-icons/io5'
 import { formatCurrency } from '@/utils'
 import { useExpenseMonth } from './ExpenseMonthProvider'
+import { ExpenseItem } from './ExpenseItem'
 
 const ExpenseMonth: React.FC = () => {
   const { dates } = useExpenseMonth()
@@ -34,17 +35,10 @@ const ExpenseMonth: React.FC = () => {
                 </div>
               </div>
 
-              {/* Table Items */}
               {group.items.map((item) => (
-                <div className="flex group" key={item.id}>
-                  <input
-                    defaultValue={item.amount}
-                    className="shrink-0 group-last:rounded-bl-[8px] group-last:border-b-0 w-[160px] px-16 py-8 border-r border-b border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ring-inset"></input>
-                  <input
-                    defaultValue={item.description}
-                    className="w-full group-last:rounded-br-[8px] group-last:border-b-0 px-16 py-8 border-b border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ring-inset"></input>
-                </div>
+                <ExpenseItem item={item} key={item.id} />
               ))}
+
               <button className="flex w-full items-center text-neutral-500 p-8 hover:text-primary-500 duration-200">
                 <IoAddSharp className="mr-8" size="20" />
                 Add expenses

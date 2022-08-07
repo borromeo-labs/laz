@@ -27,8 +27,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/expense-groups/{group}', [ExpenseController::class, 'show']);
     Route::post('/expense-groups/{group}/items', [ExpenseController::class, 'store']);
-    Route::put('/expenses-groups/{group}/items/{item}', [ExpenseController::class, 'update']);
-    Route::delete('/expenses-groups/{group}/items/{item}', [ExpenseController::class, 'destroy']);
+
+    Route::put('/expense-items/{item}', [ExpenseController::class, 'update']);
+    Route::delete('/expense-items/{item}', [ExpenseController::class, 'destroy']);
 
     Route::get('/bills', [BillController::class, 'index']);
     Route::post('/bills', [BillController::class, 'store']);

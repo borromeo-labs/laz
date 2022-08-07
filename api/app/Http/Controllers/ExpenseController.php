@@ -35,6 +35,7 @@ class ExpenseController extends Controller
         request()->validate([
             'amount' => ['required', 'numeric'],
             'description' => ['required', 'max:255'],
+            // @TODO: Validate that due_at is within the same month as $group
             'due_at' => ['required', 'date_format:Y-m-d']
         ]);
 
@@ -59,16 +60,17 @@ class ExpenseController extends Controller
     /**
      * Update existing expense item
      */
-    public function update(ExpenseGroup $group, ExpenseItem $item)
+    public function update(ExpenseItem $item)
     {
         request()->validate([
             'amount' => ['required', 'numeric'],
-            'description' => ['required', 'max:255'],
+            'description' => ['max:255'],
+            // @TODO: Validate that due_at is within the same month as $group
             'due_at' => ['required', 'date_format:Y-m-d']
         ]);
 
-        $group->update([
-            'amount_total' => $group->amount_total - $item->amount + request()->get('amount')
+        $item->group->update([
+            'amount_total' => $item->group->amount_total - $item->amount + request()->get('amount')
         ]);
 
         $item->update(
@@ -83,8 +85,10 @@ class ExpenseController extends Controller
     /**
      * Delete existing expense item
      */
-    public function destroy(ExpenseGroup $group, ExpenseItem $item)
+    public function destroy(ExpenseItem $item)
     {
+        $item->group->decreaseAmountTotal($item->amount);
+
         $item->delete();
 
         return response()->json([
