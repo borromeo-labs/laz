@@ -10,11 +10,15 @@ class ExpenseController extends Controller
 {
     /**
      * Fetch all the details from an expense controller
-     * 
-     * @TODO: Validate $year
      */
-    public function index(string $year)
+    public function index()
     {
+        request()->validate([
+            'year' => 'required|date_format:Y'
+        ]);
+
+        $year = request()->get('year');
+
         $map = collect(range(1, 12))->keyBy(function ($month) use ($year) {
             // Let carbon safely format month so we don't have to pad it by hand
             return Carbon::parse("{$year}-{$month}")->format('Y-m');
