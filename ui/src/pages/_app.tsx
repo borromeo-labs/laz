@@ -25,7 +25,7 @@ function App({ Component, pageProps }) {
 
   const getLayout = Component.getLayout || DEFAULT_LAYOUT
 
-  const favicon = process.env.NODE_ENV === 'production' ? '/favicon.png?v=1' : '/favicon-dev.png?v=1'
+  const favicon = process.env.NODE_ENV === 'production' ? '/favicon.png?v=2' : '/favicon-dev.png?v=2'
 
   return (
     <>
