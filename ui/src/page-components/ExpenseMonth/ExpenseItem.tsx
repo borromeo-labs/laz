@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
+import { AxiosResponse } from 'axios'
 import { useMutation } from 'react-query'
 import { useDebouncedCallback } from 'use-debounce'
 import { useAxios } from '@/contexts/Axios'
+import { useExpenseMonth } from './ExpenseMonthProvider'
 import { ExpenseItem } from '@/types/api'
 import { useForm, FormProvider, Controller, RefCallBack } from 'react-hook-form'
 import { formatItemDueAt } from '@/utils/api'
 import { yupResolver as resolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-// @TODO: Feels like we don't need this at all
 const schema = Yup.object({
   amount: Yup.number().positive().integer(),
   description: Yup.string().max(255),
@@ -21,7 +22,13 @@ interface ExpenseItemProps {
   item: ExpenseItem
 }
 
+interface UpdateExpenseItemResponse {
+  expense_item: ExpenseItem
+}
+
 const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
+  const { updateItem } = useExpenseMonth()
+
   const form = useForm<ExpenseItemFormValues>({
     mode: 'onChange',
     defaultValues: {
@@ -31,17 +38,17 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
     resolver: resolver(schema),
   })
 
-  const { control, watch, getValues } = form
+  const { control, getValues } = form
 
   const { axios } = useAxios()
 
-  const handleUpdateItemSuccess = () => {
-    // @TODO: Update ExpenseMonthProvider & DateGroup total
+  const handleUpdateItemSuccess = (response: AxiosResponse<UpdateExpenseItemResponse>) => {
+    updateItem(item.id, response.data.expense_item)
   }
 
-  const { mutate } = useMutation(
+  const { mutateAsync } = useMutation<AxiosResponse<UpdateExpenseItemResponse>, null, ExpenseItemFormValues>(
     ['expense-items', item.id],
-    (values: ExpenseItemFormValues) => {
+    (values) => {
       return axios.put(`expense-items/${item.id}`, {
         ...values,
         due_at: formatItemDueAt(item.due_at),
@@ -52,7 +59,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
 
   const handleChange = (field, value) => {
     const values = getValues()
-    mutate({ ...values, [field]: value })
+    mutateAsync({ ...values, [field]: value })
   }
 
   return (
