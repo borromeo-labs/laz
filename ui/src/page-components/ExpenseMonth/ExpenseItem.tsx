@@ -42,6 +42,8 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
 
   const { axios } = useAxios()
 
+  // @TODO: Error handling
+  // https://linear.app/borromeo-labs/issue/BOR-72/undo-expense-item-updates-and-show-toast-when-error-occurs
   const { mutateAsync } = useMutation<AxiosResponse<UpdateExpenseItemResponse>, null, ExpenseItemFormValues>(
     ['expense-items', item.id],
     (values) => {
