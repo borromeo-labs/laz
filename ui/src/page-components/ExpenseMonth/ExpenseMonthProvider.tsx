@@ -28,7 +28,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { data, isLoading: isDataLoading } = useQuery<ExpenseGroup>(
     ['expense-groups', date],
     async () => (await axios.get(`/expense-groups/${date}`)).data.expense_group,
-    { enabled: Boolean(session), onSuccess: (data) => setDates(groupItemsByDate(data)) }
+    { enabled: Boolean(session), onSuccess: (data) => setDates(groupItemsByDate(data)) },
   )
 
   const insertItem = (item: ExpenseItem) => {
@@ -41,7 +41,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         group.items.push(item)
         // @TODO: We probably should calculate this on our render function instead
         group.total = getDateGroupTotal(group.items)
-      })
+      }),
     )
   }
 
@@ -54,7 +54,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const index = group.items.findIndex((item) => item.id === id)
         if (index === -1) throw fatal('Unable to replace buffer item.')
         group.items[index] = item
-      })
+      }),
     )
   }
 
@@ -66,7 +66,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         group.items = group.items.filter((i) => i.id !== item.id)
         // @TODO: We probably should calculate this on our render function instead
         group.total = getDateGroupTotal(group.items)
-      })
+      }),
     )
   }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 import { useMutation } from 'react-query'
-import { useDebounce, useUpdateEffect } from 'react-use'
+import { useDebouncedCallback } from 'use-debounce'
 import { useAxios } from '@/contexts/Axios'
 import { ExpenseItem } from '@/types/api'
 import { useForm, FormProvider, Controller, RefCallBack } from 'react-hook-form'
@@ -22,7 +22,7 @@ interface ExpenseItemProps {
 }
 
 const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
-  const { control, watch, ...form } = useForm<ExpenseItemFormValues>({
+  const form = useForm<ExpenseItemFormValues>({
     mode: 'onChange',
     defaultValues: {
       amount: item.amount,
@@ -30,6 +30,8 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
     },
     resolver: resolver(schema),
   })
+
+  const { control, watch, getValues } = form
 
   const { axios } = useAxios()
 
@@ -48,14 +50,13 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
     { onSuccess: handleUpdateItemSuccess },
   )
 
-  const [amount, description] = watch(['amount', 'description'])
-
-  useUpdateEffect(() => {
-    mutate({ amount, description })
-  }, [amount, description])
+  const handleChange = (field, value) => {
+    const values = getValues()
+    mutate({ ...values, [field]: value })
+  }
 
   return (
-    <FormProvider control={control} watch={watch} {...form}>
+    <FormProvider {...form}>
       <div className="flex group" key={item.id}>
         <Controller
           name="amount"
@@ -64,7 +65,11 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
             <ExpenseDebouncedInput
               {...field}
               value={String(field.value)}
-              onChange={(value) => field.onChange(Number(value))}
+              onChange={(value) => {
+                const amount = Number(value)
+                field.onChange(amount)
+                handleChange(field.name, amount)
+              }}
               width={160}
               placeholder={String(item.amount)}
             />
@@ -74,7 +79,16 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
         <Controller
           name="description"
           control={control}
-          render={({ field }) => <ExpenseDebouncedInput {...field} placeholder={item.description} />}
+          render={({ field }) => (
+            <ExpenseDebouncedInput
+              {...field}
+              onChange={(value) => {
+                field.onChange(value)
+                handleChange(field.name, value)
+              }}
+              placeholder={item.description}
+            />
+          )}
         />
       </div>
     </FormProvider>
@@ -94,19 +108,13 @@ const ExpenseDebouncedInput: React.FC<ExpenseDebouncedInputProps> = React.forwar
   ({ value, name, placeholder, width, onChange }, ref: RefCallBack) => {
     const [internalValue, setInternalValue] = useState(value)
 
-    const handleInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
-      console.log('changing input')
-      setInternalValue(evt.target.value)
-    }
+    const debouncedOnChange = useDebouncedCallback((value: string) => onChange(value), 500)
 
-    useDebounce(
-      () => {
-        console.log('debounce')
-        onChange(internalValue ?? '')
-      },
-      500,
-      [internalValue],
-    )
+    const handleInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+      const input = evt.target.value ?? ''
+      setInternalValue(input)
+      debouncedOnChange(input)
+    }
 
     return (
       <input
