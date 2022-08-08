@@ -4,16 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\ExpenseGroup;
 use App\Models\ExpenseItem;
+use Carbon\Carbon;
 
 class ExpenseController extends Controller
 {
     /**
      * Fetch all the details from an expense controller
+     * 
+     * @TODO: Validate $year
      */
-    public function index()
+    public function index(string $year)
     {
+        $map = collect(range(1, 12))->keyBy(function ($month) use ($year) {
+            // Let carbon safely format month so we don't have to pad it by hand
+            return Carbon::parse("{$year}-{$month}")->format('Y-m');
+        })->map(fn () => null);
+
+        $groups = request()->user()->expenses()->withinTheYear($year)->get()->keyBy(function ($group) {
+            return $group->month->format('Y-m');
+        });
+
+        // Fills the gaps so months that don't exist at least have their keys in the map
+        // $groups = ({ "2022-02": { ... } })
+        // $serialized = ({ "2022-01": null, "2022-02": { ... } })
+        $serialized = $groups->union($map);
+
         return response()->json([
-            'expense_groups' => request()->user()->groups
+            'expense_groups' => $serialized
         ]);
     }
 

@@ -101,6 +101,23 @@ class ExpenseGroup extends Model
     }
 
     /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string $date
+     * @return void
+     */
+    public function scopeWithinTheYear($query, string $date)
+    {
+        $dt = Carbon::parse($date);
+
+        $query->whereBetween('month', [
+            $dt->firstOfYear()->format('Y-m-d'),
+            $dt->lastOfYear()->format('Y-m-d')
+        ]);
+    }
+
+    /**
      * Create the expense group if requested month is current month
      * 
      * @TODO: We should probably add a new function on query builder instead of hard-coding things here.
