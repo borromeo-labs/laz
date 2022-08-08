@@ -129,7 +129,7 @@ const ExpenseDebouncedInput: React.FC<ExpenseDebouncedInputProps> = React.forwar
         placeholder={placeholder}
         name={name}
         className={cx(
-          'group-last:rounded-br-[8px] group-last:border-b-0 px-16 py-8 border-b border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ring-inset',
+          'group-last:rounded-br-[8px] group-last:border-b-0 last:border-r-0 px-16 py-8 border-r border-b border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ring-inset',
           {
             'w-full': width == null,
           },
