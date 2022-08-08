@@ -42,10 +42,6 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
 
   const { axios } = useAxios()
 
-  const handleUpdateItemSuccess = (response: AxiosResponse<UpdateExpenseItemResponse>) => {
-    updateItem(item.id, response.data.expense_item)
-  }
-
   const { mutateAsync } = useMutation<AxiosResponse<UpdateExpenseItemResponse>, null, ExpenseItemFormValues>(
     ['expense-items', item.id],
     (values) => {
@@ -54,11 +50,11 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
         due_at: formatItemDueAt(item.due_at),
       })
     },
-    { onSuccess: handleUpdateItemSuccess },
   )
 
   const handleChange = (field, value) => {
     const values = getValues()
+    updateItem(item.id, { ...item, [field]: value })
     mutateAsync({ ...values, [field]: value })
   }
 
