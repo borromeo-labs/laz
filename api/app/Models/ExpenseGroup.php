@@ -31,6 +31,7 @@ class ExpenseGroup extends Model
      * @var array
      */
     protected $casts = [
+        'amount_total' => 'float',
         'month' => 'date:Y-m'
     ];
 

@@ -27,6 +27,7 @@ class ExpenseItem extends Model
      * @var array
      */
     protected $casts = [
+        'amount' => 'float',
         'due_at' => 'date:Y-m-d'
     ];
 
