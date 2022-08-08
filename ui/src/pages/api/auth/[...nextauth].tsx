@@ -4,14 +4,14 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { config } from '@/config'
 
 const instance = axios.create({
-  baseURL: config.api.baseUrl
+  baseURL: config.api.baseUrl,
 })
 
 const credentials = CredentialsProvider({
   name: 'Laz Login',
   credentials: {
     username: { label: 'Email', type: 'email' },
-    password: { label: 'Password', type: 'password' }
+    password: { label: 'Password', type: 'password' },
   },
   async authorize(credentials, req) {
     const response = await instance.post('/oauth/token', {
@@ -19,15 +19,15 @@ const credentials = CredentialsProvider({
       password: credentials?.password,
       grant_type: 'password',
       client_id: config.api.oauthClientId,
-      client_secret: config.api.oauthClientSecret
+      client_secret: config.api.oauthClientSecret,
     })
 
     return (
       await instance.get('/auth/user', {
-        headers: { Authorization: `Bearer ${response.data.access_token}` }
+        headers: { Authorization: `Bearer ${response.data.access_token}` },
       })
     ).data.user
-  }
+  },
 })
 
 const callbacks: Partial<CallbacksOptions> = {
@@ -43,7 +43,7 @@ const callbacks: Partial<CallbacksOptions> = {
       password: credentials?.password,
       grant_type: 'password',
       client_id: process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID,
-      client_secret: process.env.NEXT_PUBLIC_OAUTH_CLIENT_SECRET
+      client_secret: process.env.NEXT_PUBLIC_OAUTH_CLIENT_SECRET,
     })
 
     user.accessToken = response.data.access_token
@@ -58,7 +58,7 @@ const callbacks: Partial<CallbacksOptions> = {
 
     session.accessToken = token.accessToken
     const response = await instance.get('/auth/user', {
-      headers: { Authorization: `Bearer ${session.accessToken}` }
+      headers: { Authorization: `Bearer ${session.accessToken}` },
     })
     session.user = response.data.user
     return session
@@ -71,7 +71,7 @@ const callbacks: Partial<CallbacksOptions> = {
 
     if (user) return { accessToken: user.accessToken }
     return token
-  }
+  },
 }
 
 export const authOptions = {
@@ -81,8 +81,8 @@ export const authOptions = {
   pages: {
     signIn: '/login',
     signOut: '/logout',
-    newUser: '/register'
-  }
+    newUser: '/register',
+  },
 }
 
 export default NextAuth(authOptions)

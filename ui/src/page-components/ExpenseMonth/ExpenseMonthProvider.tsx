@@ -28,7 +28,7 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { data, isLoading: isDataLoading } = useQuery<ExpenseGroup>(
     ['expense-groups', date],
     async () => (await axios.get(`/expense-groups/${date}`)).data.expense_group,
-    { enabled: Boolean(session), onSuccess: (data) => setDates(groupItemsByDate(data)) }
+    { enabled: Boolean(session), onSuccess: (data) => setDates(groupItemsByDate(data)) },
   )
 
   const insertItem = (item: ExpenseItem) => {
@@ -41,20 +41,34 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         group.items.push(item)
         // @TODO: We probably should calculate this on our render function instead
         group.total = getDateGroupTotal(group.items)
-      })
+      }),
     )
   }
 
+  // Should be used only to replace buffer item for newly created items
   const replaceItem = (id: Uuid, item: ExpenseItem) => {
     setDates(
       immer((draft) => {
         const group: DateGroup = draft.find((g) => g.date === item.due_at)
         if (!group) throw fatal('Unable to replace item from the correct date group.')
-        console.log(current(group.items), id)
         const index = group.items.findIndex((item) => item.id === id)
         if (index === -1) throw fatal('Unable to replace buffer item.')
         group.items[index] = item
-      })
+      }),
+    )
+  }
+
+  // Should be used for actual update operations
+  const updateItem = (id: ID, item: ExpenseItem) => {
+    setDates(
+      immer((draft) => {
+        const group: DateGroup = draft.find((g) => g.date === item.due_at)
+        if (!group) throw fatal('Unable to replace item from the correct date group.')
+        const index = group.items.findIndex((item) => item.id === id)
+        if (index === -1) throw fatal('Unable to replace buffer item.')
+        group.items[index] = item
+        group.total = getDateGroupTotal(group.items)
+      }),
     )
   }
 
@@ -66,12 +80,13 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         group.items = group.items.filter((i) => i.id !== item.id)
         // @TODO: We probably should calculate this on our render function instead
         group.total = getDateGroupTotal(group.items)
-      })
+      }),
     )
   }
 
   return (
-    <ExpenseMonthContext.Provider value={{ data, dates, isDataLoading, insertItem, replaceItem, deleteItem }}>
+    <ExpenseMonthContext.Provider
+      value={{ data, dates, isDataLoading, insertItem, replaceItem, updateItem, deleteItem }}>
       {children}
     </ExpenseMonthContext.Provider>
   )

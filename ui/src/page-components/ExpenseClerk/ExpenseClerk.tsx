@@ -9,7 +9,7 @@ import { useNotificationState } from '@/hooks'
 import { Badge, Button, Modal } from '@/components'
 
 import { format } from 'date-fns'
-import { useExpenseGroupCreateMutation } from './mutations'
+import { useExpenseItemCreateMutation } from './mutations'
 import { parseExpenseString } from './utils'
 
 const schema = Yup.object({
@@ -33,14 +33,16 @@ const ExpenseClerk = () => {
   })
 
   const group = useMemo(() => {
+    // @TODO: Create `formatMonthDueAt`
     return format(new Date(), 'yyyy-MM')
   }, [])
 
   const dueAt = useMemo(() => {
+    // @TODO: Use `formatItemDueAt`
     return format(new Date(), 'yyyy-MM-dd')
   }, [])
 
-  const { mutate } = useExpenseGroupCreateMutation({ group })
+  const { mutate } = useExpenseItemCreateMutation({ group })
 
   const handleOpen = () => {
     setIsOpen(true)

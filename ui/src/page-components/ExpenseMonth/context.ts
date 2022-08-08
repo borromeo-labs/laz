@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { ExpenseGroup, ExpenseItem, Uuid } from '@/types/api'
+import { ExpenseGroup, ExpenseItem, ID, Uuid } from '@/types/api'
 
 export interface DateGroup {
   label: string
@@ -14,6 +14,7 @@ export interface ExpenseMonthContextType {
   isDataLoading: boolean
   insertItem: (item: ExpenseItem) => void
   replaceItem: (uuid: Uuid, item: ExpenseItem) => void
+  updateItem: (uuid: ID, item: ExpenseItem) => void
   deleteItem: (item: ExpenseItem) => void
 }
 

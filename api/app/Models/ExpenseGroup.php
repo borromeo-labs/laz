@@ -31,6 +31,7 @@ class ExpenseGroup extends Model
      * @var array
      */
     protected $casts = [
+        'amount_total' => 'float',
         'month' => 'date:Y-m'
     ];
 
@@ -41,7 +42,7 @@ class ExpenseGroup extends Model
 
     public function items()
     {
-        return $this->hasMany(ExpenseItem::class, 'group_id');
+        return $this->hasMany(ExpenseItem::class, 'group_id')->orderBy('created_at');
     }
 
     /**
