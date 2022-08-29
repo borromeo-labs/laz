@@ -15,7 +15,7 @@ import { getGuardedRoutesServerProps } from '@/server'
 
 const schema = Yup.object({
   username: Yup.string().email().required(),
-  password: Yup.string().required()
+  password: Yup.string().required(),
 })
 
 type LoginFormValues = Yup.InferType<typeof schema>
@@ -25,9 +25,9 @@ export default function Login() {
     mode: 'onChange',
     defaultValues: {
       username: '',
-      password: ''
+      password: '',
     },
-    resolver: resolver(schema)
+    resolver: resolver(schema),
   })
 
   const { replace } = useRouter()
@@ -35,7 +35,7 @@ export default function Login() {
   const handleLogin = async (values: LoginFormValues) => {
     const { error } = await signIn('credentials', {
       redirect: false,
-      ...values
+      ...values,
     })
 
     if (error) {
@@ -46,7 +46,7 @@ export default function Login() {
   const { mutateAsync, isLoading, error } = useMutation('login', handleLogin, {
     onSuccess: () => {
       replace('/')
-    }
+    },
   })
 
   const onSubmit = handleSubmit((values: LoginFormValues) => {
@@ -70,7 +70,7 @@ export default function Login() {
       <form onSubmit={onSubmit}>
         <div className="space-y-24">
           {/* @TODO: https://linear.app/borromeo-labs/issue/BOR-60/improve-design-for-errors */}
-          {Boolean(error) && <div className="text-red-400 p-4">Incorrecat username or password</div>}
+          {Boolean(error) && <div className="text-red-400 p-4">Incorrect username or password</div>}
 
           <Controller
             control={control}
