@@ -37,7 +37,7 @@ Run migrations and seed data:
 Install Passport keys and and create client id/secret:
 
 ```
-sail artisan install
+sail artisan passport:install
 sail artisan passport:client --password
 ```
 
