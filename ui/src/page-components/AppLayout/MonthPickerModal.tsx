@@ -1,10 +1,13 @@
 import React, { useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
+import { useQuery } from 'react-query'
+import { useAxios } from '@/contexts/Axios'
 import cx from 'classnames'
 import { Modal } from '@/components'
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { isSameMonth, isAfter, format } from 'date-fns'
 import { useExpenseMonth } from '@/page-components/ExpenseMonth'
+import { formatCurrency } from '@/utils'
 import { formatMonth } from '@/utils/api'
 
 const MONTHS = [
@@ -21,14 +24,29 @@ const MONTHS = [
   'December',
 ]
 
+interface ExpenseGroupSummaryResponse {
+  expense_groups: Record<string, number>
+}
+
 const MonthPickerModal = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const { push } = useRouter()
-
-  const [selectedYear, setSelectedYear] = useState(() => new Date().getFullYear())
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { selectedMonth } = useExpenseMonth()
+
+  const [selectedYear, setSelectedYear] = useState(() => new Date(selectedMonth).getFullYear())
+
+  const { axios } = useAxios()
+
+  const { data, isLoading } = useQuery(
+    'expense-summary',
+    () => {
+      const year = new Date(selectedMonth).getFullYear()
+      return axios.get<ExpenseGroupSummaryResponse>(`/expense-summary?year=${year}`)
+    },
+    { select: (response) => response.data.expense_groups },
+  )
+
+  const { push } = useRouter()
 
   // @TODO: Update every interval
   const [today] = useState(() => formatMonth(new Date()))
@@ -43,17 +61,17 @@ const MonthPickerModal = () => {
   }, [selectedYear])
 
   const handleOpen = () => {
-    setIsOpen(true)
+    setIsModalOpen(true)
   }
 
   const handleClose = () => {
-    setIsOpen(false)
+    setIsModalOpen(false)
   }
 
   const makeSelectDateHandler = (date: string) => {
     return () => {
       push(`/?date=${date}`)
-      setIsOpen(false)
+      setIsModalOpen(false)
     }
   }
 
@@ -70,12 +88,14 @@ const MonthPickerModal = () => {
         </i>
       </button>
 
-      <Modal title="Select Year & Month" isOpen={isOpen} onClose={handleClose}>
+      <Modal title="Select Year & Month" isOpen={isModalOpen} onClose={handleClose}>
         <div className="grid grid-cols-4 gap-16">
           {months.map((month, i) => {
             const isActiveMonth = isSameMonth(new Date(month.date), new Date(selectedMonth))
 
             const isFutureMonth = isAfter(new Date(month.date), new Date(today))
+
+            const amount = data?.[month.date]
 
             return (
               <button
@@ -87,7 +107,9 @@ const MonthPickerModal = () => {
                 onClick={makeSelectDateHandler(month.date)}
                 key={month.date}>
                 <div className="text-neutral-600">{month.label}</div>
-                <div className="text-neutral-600">&mdash;</div>
+                <div className="text-neutral-600">
+                  {isLoading || !amount ? <span>&mdash;</span> : formatCurrency(amount)}
+                </div>
               </button>
             )
           })}
