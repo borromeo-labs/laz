@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { format, isSameMonth } from 'date-fns'
 import { useAxios } from '@/contexts/Axios'
 import { fatal } from '@/utils'
+import { formatMonth } from '@/utils/api'
 import { ExpenseGroup, ExpenseItem, ID, Uuid } from '@/types/api'
 import { ExpenseMonthContext, DateGroup } from './context'
 import { groupItemsByDate, getDateGroupTotal } from './utils'
@@ -20,14 +21,14 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const { axios } = useAxios()
 
-  const date = useMemo(() => {
+  const selectedMonth = useMemo(() => {
     const base = query.date ? new Date(String(query.date)) : new Date()
     return format(base, 'yyyy-MM')
   }, [query])
 
   const { data, isLoading: isDataLoading } = useQuery<ExpenseGroup>(
-    ['expense-groups', date],
-    async () => (await axios.get(`/expense-groups/${date}`)).data.expense_group,
+    ['expense-groups', selectedMonth],
+    async () => (await axios.get(`/expense-groups/${selectedMonth}`)).data.expense_group,
     { enabled: Boolean(session), onSuccess: (data) => setDates(groupItemsByDate(data)) },
   )
 
@@ -86,7 +87,16 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   return (
     <ExpenseMonthContext.Provider
-      value={{ data, dates, isDataLoading, insertItem, replaceItem, updateItem, deleteItem }}>
+      value={{
+        data,
+        selectedMonth,
+        dates,
+        isDataLoading,
+        insertItem,
+        replaceItem,
+        updateItem,
+        deleteItem,
+      }}>
       {children}
     </ExpenseMonthContext.Provider>
   )
