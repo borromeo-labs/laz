@@ -101,7 +101,7 @@ const MonthPickerModal = () => {
 
             return (
               <button
-                className={cx('p-8 text-left rounded disabled:opacity-50', {
+                className={cx('p-8 text-left rounded disabled:opacity-50 disabled:cursor-not-allowed', {
                   'border-2 border-primary-600': isActiveMonth,
                   'border border-neutral-300': !isActiveMonth,
                 })}
