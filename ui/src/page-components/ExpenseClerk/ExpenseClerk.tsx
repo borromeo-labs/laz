@@ -9,6 +9,7 @@ import { useNotificationState } from '@/hooks'
 import { Badge, Button, Modal } from '@/components'
 
 import { format } from 'date-fns'
+import { formatItemDueAt, formatMonth } from '@/utils/api'
 import { useExpenseItemCreateMutation } from './mutations'
 import { parseExpenseString } from './utils'
 
@@ -34,12 +35,12 @@ const ExpenseClerk = () => {
 
   const group = useMemo(() => {
     // @TODO: Create `formatMonthDueAt`
-    return format(new Date(), 'yyyy-MM')
+    return formatMonth(new Date())
   }, [])
 
   const dueAt = useMemo(() => {
     // @TODO: Use `formatItemDueAt`
-    return format(new Date(), 'yyyy-MM-dd')
+    return formatItemDueAt(new Date())
   }, [])
 
   const { mutate } = useExpenseItemCreateMutation({ group })

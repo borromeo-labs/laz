@@ -9,20 +9,7 @@ import { isSameMonth, isAfter, format } from 'date-fns'
 import { useExpenseMonth } from '@/page-components/ExpenseMonth'
 import { formatCurrency } from '@/utils'
 import { formatMonth } from '@/utils/api'
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
+import { MONTHS } from './constants'
 
 interface ExpenseGroupSummaryResponse {
   expense_groups: Record<string, number>
