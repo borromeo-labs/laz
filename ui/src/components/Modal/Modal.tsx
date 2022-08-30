@@ -5,10 +5,11 @@ interface ModalProps {
   isOpen: boolean
   onClose: () => void
   title: string
+  action?: React.ReactNode
   children: React.ReactNode
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, action, children }) => {
   return (
     <Transition appear show={isOpen} as={React.Fragment}>
       <Dialog onClose={onClose}>
@@ -34,10 +35,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95">
               <Dialog.Panel className="w-full bg-white rounded">
-                <div className="flex items-center justify-apart py-16 px-24 border-b border-neutral-200">
+                <div className="flex items-center justify-between py-16 px-24 w-full border-b border-neutral-200">
                   <Dialog.Title as="h5" className="text-h5 font-bold">
                     {title}
                   </Dialog.Title>
+
+                  {action}
                 </div>
 
                 <div className="p-24">{children}</div>

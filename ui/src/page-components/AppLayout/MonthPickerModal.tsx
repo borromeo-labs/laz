@@ -1,12 +1,13 @@
 import React, { useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
+import { range } from 'lodash'
 import { useAxios } from '@/contexts/Axios'
 import cx from 'classnames'
-import { Modal } from '@/components'
+import { useExpenseMonth } from '@/page-components/ExpenseMonth'
+import { Modal, SelectInput } from '@/components'
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { isSameMonth, isAfter, format } from 'date-fns'
-import { useExpenseMonth } from '@/page-components/ExpenseMonth'
 import { formatCurrency } from '@/utils'
 import { formatMonth } from '@/utils/api'
 import { MONTHS } from './constants'
@@ -25,11 +26,8 @@ const MonthPickerModal = () => {
   const { axios } = useAxios()
 
   const { data, isLoading } = useQuery(
-    'expense-summary',
-    () => {
-      const year = new Date(selectedMonth).getFullYear()
-      return axios.get<ExpenseGroupSummaryResponse>(`/expense-summary?year=${year}`)
-    },
+    ['expense-summary', selectedYear],
+    () => axios.get<ExpenseGroupSummaryResponse>(`/expense-summary?year=${selectedYear}`),
     { select: (response) => response.data.expense_groups },
   )
 
@@ -62,9 +60,22 @@ const MonthPickerModal = () => {
     }
   }
 
+  const handleSelectedYearChange = (year: string) => {
+    setSelectedYear(Number(year))
+  }
+
   const selectedMonthText = useMemo(() => {
     return format(new Date(selectedMonth), 'LLLL yyyy')
   }, [selectedMonth])
+
+  const yearOptions = useMemo(() => {
+    const currentYear = new Date(today).getFullYear()
+    return range(1970, currentYear + 1)
+      .reverse()
+      .map((y) => {
+        return { label: String(y), value: y }
+      })
+  }, [today])
 
   return (
     <>
@@ -75,7 +86,11 @@ const MonthPickerModal = () => {
         </i>
       </button>
 
-      <Modal title="Select Year & Month" isOpen={isModalOpen} onClose={handleClose}>
+      <Modal
+        title="Select Year & Month"
+        isOpen={isModalOpen}
+        action={<SelectInput options={yearOptions} value={selectedYear} onChange={handleSelectedYearChange} />}
+        onClose={handleClose}>
         <div className="grid grid-cols-4 gap-16">
           {months.map((month, i) => {
             const isActiveMonth = isSameMonth(new Date(month.date), new Date(selectedMonth))
