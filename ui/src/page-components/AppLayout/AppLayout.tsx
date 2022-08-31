@@ -2,17 +2,11 @@ import React from 'react'
 import Avatar from 'boring-avatars'
 import LogoLaz from '@/assets/png/logo_laz.png'
 import { SelectMenu } from '@/components'
-import {
-  IoChevronForwardOutline,
-  IoChevronBackOutline,
-  IoCaretDownOutline,
-  IoWallet,
-  IoPersonSharp,
-  IoLogOut,
-} from 'react-icons/io5'
+import { IoWallet, IoPersonSharp, IoLogOut } from 'react-icons/io5'
 import { useSession } from 'next-auth/react'
 import { ExpenseClerk } from '@/page-components/ExpenseClerk'
 import { signOut } from 'next-auth/react'
+import { MonthControls } from './MonthControls'
 import { MonthPickerModal } from './MonthPickerModal'
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -28,13 +22,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
 
           <div className="flex justify-center w-half">
-            <button className="px-12 py-8 mr-8 rounded hover:bg-neutral-200 duration-150">
-              <IoChevronBackOutline size={24} />
-            </button>
-
-            <button className="px-12 py-8 mr-12 rounded hover:bg-neutral-200 duration-150">
-              <IoChevronForwardOutline size={24} />
-            </button>
+            <MonthControls />
 
             <MonthPickerModal />
           </div>
