@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { formatItemDueAt } from '@/utils/api'
 import { DateGroup } from './context'
 import { getDateGroupContainerId } from './utils'
@@ -12,7 +12,16 @@ const ExpenseDateGroupContainer: React.FC<Props> = ({ group, children }) => {
   // @TODO: Update every interval
   const [today] = useState(() => formatItemDueAt(new Date()))
 
+  // Prevent subsequent calls. For some reason, ref gets called again when user refocuses the window.
+  const onceRef = useRef(false)
+
   const registerRef = (element: HTMLDivElement) => {
+    if (onceRef.current) {
+      return
+    }
+
+    onceRef.current = true
+
     if (typeof window === 'undefined') {
       return
     }
