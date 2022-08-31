@@ -87,6 +87,7 @@ module.exports = {
     },
 
     zIndex: {
+      'navigation': 900,
       'modal-backdrop': 1000,
       'modal-content': 1001,
       'timeline-circle': 1

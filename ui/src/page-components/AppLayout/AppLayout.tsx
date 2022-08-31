@@ -13,9 +13,9 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data } = useSession()
 
   return (
-    <div className="flex-col bg-[#FAFBFF]">
+    <div className="relative min-h-screen bg-[#FAFBFF]">
       {/* Navbar */}
-      <div className="bg-white border-b-[1px] border-neutral-300">
+      <div className="sticky top-0 bg-white border-b-[1px] border-neutral-300 z-navigation">
         <div className="flex items-center justify-between max-w-[1440px] mx-auto px-56 py-12">
           <div className="flex w-1/4">
             <img src={LogoLaz.src} width="56" />

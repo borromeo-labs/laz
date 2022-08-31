@@ -2,17 +2,18 @@ import React from 'react'
 import { IoAddSharp } from 'react-icons/io5'
 import { formatCurrency } from '@/utils'
 import { useExpenseMonth } from './ExpenseMonthProvider'
+import { ExpenseDateGroupContainer } from './ExpenseDateGroupContainer'
 import { ExpenseItem } from './ExpenseItem'
 
 const ExpenseMonth: React.FC = () => {
-  const { dates } = useExpenseMonth()
+  const { data, dates } = useExpenseMonth()
 
   return (
     <div className="py-56">
       <div className="relative mx-auto max-w-[560px]">
         {/* Table Component */}
         {dates.map((group) => (
-          <div className="relative mb-[56px]" key={group.date}>
+          <ExpenseDateGroupContainer group={group} key={group.date}>
             <div className="flex items-center absolute -left-[360px]">
               <p className="text-neutral-600 font-semibold mr-[24px] w-[160px] text-right">{group.label}</p>
               <div className="h-12 w-12 bg-primary-500 rounded-full outline-8 outline-[#F8FAFC] outline z-timeline-circle"></div>
@@ -44,7 +45,7 @@ const ExpenseMonth: React.FC = () => {
                 Add expenses
               </button>
             </div>
-          </div>
+          </ExpenseDateGroupContainer>
         ))}
 
         <div className="w-px absolute top-0 bottom-0 -left-[171px] bg-neutral-200"></div>

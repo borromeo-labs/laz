@@ -98,9 +98,7 @@ const MonthPickerModal = () => {
         action={<SelectInput options={yearOptions} value={selectedYear} onChange={handleSelectedYearChange} />}
         onClose={handleClose}>
         <div className="grid grid-cols-4 gap-16">
-          {months.map((month, i) => {
-            console.log(month.date)
-
+          {months.map((month) => {
             const isActiveMonth = isSameMonth(new Date(month.date), new Date(selectedMonth))
 
             const isFutureMonth = isAfter(new Date(month.date), new Date(today))
