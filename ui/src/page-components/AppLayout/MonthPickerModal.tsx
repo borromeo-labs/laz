@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
+import { useUpdateEffect } from 'react-use'
 import { useQuery } from 'react-query'
 import { range } from 'lodash'
 import { useAxios } from '@/contexts/Axios'
@@ -40,10 +41,15 @@ const MonthPickerModal = () => {
     return MONTHS.map((month, i) => {
       return {
         label: month,
-        date: formatMonth(new Date(selectedYear, i + 1)),
+        date: formatMonth(new Date(selectedYear, i)),
       }
     })
   }, [selectedYear])
+
+  useUpdateEffect(() => {
+    // We want to be reactive for when MonthControls navigates to a previous year
+    setSelectedYear(new Date(selectedMonth).getFullYear())
+  }, [selectedMonth])
 
   const handleOpen = () => {
     setIsModalOpen(true)
@@ -93,6 +99,8 @@ const MonthPickerModal = () => {
         onClose={handleClose}>
         <div className="grid grid-cols-4 gap-16">
           {months.map((month, i) => {
+            console.log(month.date)
+
             const isActiveMonth = isSameMonth(new Date(month.date), new Date(selectedMonth))
 
             const isFutureMonth = isAfter(new Date(month.date), new Date(today))
@@ -109,7 +117,7 @@ const MonthPickerModal = () => {
                 onClick={makeSelectDateHandler(month.date)}
                 key={month.date}>
                 <div className="text-neutral-600">{month.label}</div>
-                <div className="text-neutral-600">
+                <div className={cx('text-neutral-600', { 'font-bold': isActiveMonth })}>
                   {isLoading || !amount ? <span>&mdash;</span> : formatCurrency(amount)}
                 </div>
               </button>
