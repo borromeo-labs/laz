@@ -4,53 +4,58 @@ import { formatCurrency } from '@/utils'
 import { useExpenseMonth } from './ExpenseMonthProvider'
 import { ExpenseDateGroupContainer } from './ExpenseDateGroupContainer'
 import { ExpenseItem } from './ExpenseItem'
+import { ExpenseScrollToCurrentDate } from './ExpenseScrollToCurrentDate'
 
 const ExpenseMonth: React.FC = () => {
-  const { data, dates } = useExpenseMonth()
+  const { dates } = useExpenseMonth()
 
   return (
-    <div className="py-56">
-      <div className="relative mx-auto max-w-[560px]">
-        {/* Table Component */}
-        {dates.map((group) => (
-          <ExpenseDateGroupContainer group={group} key={group.date}>
-            <div className="flex items-center absolute -left-[360px]">
-              <p className="text-neutral-600 font-semibold mr-[24px] w-[160px] text-right">{group.label}</p>
-              <div className="h-12 w-12 bg-primary-500 rounded-full outline-8 outline-[#F8FAFC] outline z-timeline-circle"></div>
-            </div>
-
-            <div className="bg-white height-full rounded-lg border border-neutral-300">
-              {/* Panel Header */}
-              <div className="p-16 border-b border-neutral-400">
-                <p className="text-h6 font-semibold ">Total Summary</p>
-                <p className="">{formatCurrency(group.total)}</p>
+    <>
+      <div className="py-56">
+        <div className="relative mx-auto max-w-[560px]">
+          {/* Table Component */}
+          {dates.map((group) => (
+            <ExpenseDateGroupContainer group={group} key={group.date}>
+              <div className="flex items-center absolute -left-[360px]">
+                <p className="text-neutral-600 font-semibold mr-[24px] w-[160px] text-right">{group.label}</p>
+                <div className="h-12 w-12 bg-primary-500 rounded-full outline-8 outline-[#F8FAFC] outline z-timeline-circle"></div>
               </div>
 
-              {/* Table Heading */}
-              <div className="flex wrap border-b border-neutral-400">
-                <div className="shrink-0 w-[160px] bg-neutral-200 text-neutral-600 px-16 py-12 text-h6 font-semibold border-r border-neutral-400">
-                  Amount
+              <div className="bg-white height-full rounded-lg border border-neutral-300">
+                {/* Panel Header */}
+                <div className="p-16 border-b border-neutral-400">
+                  <p className="text-h6 font-semibold ">Total Summary</p>
+                  <p className="">{formatCurrency(group.total)}</p>
                 </div>
-                <div className="bg-neutral-200 text-neutral-500 px-16 py-12 text-h6 font-semibold w-full">
-                  Description
+
+                {/* Table Heading */}
+                <div className="flex wrap border-b border-neutral-400">
+                  <div className="shrink-0 w-[160px] bg-neutral-200 text-neutral-600 px-16 py-12 text-h6 font-semibold border-r border-neutral-400">
+                    Amount
+                  </div>
+                  <div className="bg-neutral-200 text-neutral-500 px-16 py-12 text-h6 font-semibold w-full">
+                    Description
+                  </div>
                 </div>
+
+                {group.items.map((item) => (
+                  <ExpenseItem item={item} key={item.id} />
+                ))}
+
+                <button className="flex w-full items-center text-neutral-500 p-8 hover:text-primary-500 duration-200">
+                  <IoAddSharp className="mr-8" size="20" />
+                  Add expenses
+                </button>
               </div>
+            </ExpenseDateGroupContainer>
+          ))}
 
-              {group.items.map((item) => (
-                <ExpenseItem item={item} key={item.id} />
-              ))}
-
-              <button className="flex w-full items-center text-neutral-500 p-8 hover:text-primary-500 duration-200">
-                <IoAddSharp className="mr-8" size="20" />
-                Add expenses
-              </button>
-            </div>
-          </ExpenseDateGroupContainer>
-        ))}
-
-        <div className="w-px absolute top-0 bottom-0 -left-[171px] bg-neutral-200"></div>
+          <div className="w-px absolute top-0 bottom-0 -left-[171px] bg-neutral-200"></div>
+        </div>
       </div>
-    </div>
+
+      <ExpenseScrollToCurrentDate />
+    </>
   )
 }
 
