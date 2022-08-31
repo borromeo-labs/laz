@@ -13,7 +13,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data } = useSession()
 
   return (
-    <div className="relative bg-[#FAFBFF]">
+    <div className="relative min-h-screen bg-[#FAFBFF]">
       {/* Navbar */}
       <div className="sticky top-0 bg-white border-b-[1px] border-neutral-300 z-navigation">
         <div className="flex items-center justify-between max-w-[1440px] mx-auto px-56 py-12">
