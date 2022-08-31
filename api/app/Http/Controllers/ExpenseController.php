@@ -9,9 +9,9 @@ use Carbon\Carbon;
 class ExpenseController extends Controller
 {
     /**
-     * Fetch all the details from an expense controller
+     * Fetch total amount for each month through out the year
      */
-    public function index()
+    public function summary()
     {
         request()->validate([
             'year' => 'required|date_format:Y'
@@ -22,11 +22,15 @@ class ExpenseController extends Controller
         $map = collect(range(1, 12))->keyBy(function ($month) use ($year) {
             // Let carbon safely format month so we don't have to pad it by hand
             return Carbon::parse("{$year}-{$month}")->format('Y-m');
-        })->map(fn () => null);
+        })->map(fn () => 0);
 
-        $groups = request()->user()->expenses()->withinTheYear($year)->get()->keyBy(function ($group) {
-            return $group->month->format('Y-m');
-        });
+        $groups = request()->user()->expenses()->withinTheYear($year)->get()
+            ->keyBy(function ($group) {
+                return $group->month->format('Y-m');
+            })
+            ->map(function ($group) {
+                return $group->amount_total;
+            });
 
         // Fills the gaps so months that don't exist at least have their keys in the map
         // $groups = ({ "2022-02": { ... } })

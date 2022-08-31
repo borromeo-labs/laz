@@ -10,6 +10,7 @@ export interface DateGroup {
 
 export interface ExpenseMonthContextType {
   data: ExpenseGroup
+  selectedMonth: string
   dates: DateGroup[]
   isDataLoading: boolean
   insertItem: (item: ExpenseItem) => void

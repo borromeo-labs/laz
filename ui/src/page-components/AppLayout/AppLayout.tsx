@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Avatar from 'boring-avatars'
 import LogoLaz from '@/assets/png/logo_laz.png'
 import { SelectMenu } from '@/components'
@@ -8,11 +8,12 @@ import {
   IoCaretDownOutline,
   IoWallet,
   IoPersonSharp,
-  IoLogOut
+  IoLogOut,
 } from 'react-icons/io5'
 import { useSession } from 'next-auth/react'
 import { ExpenseClerk } from '@/page-components/ExpenseClerk'
 import { signOut } from 'next-auth/react'
+import { MonthPickerModal } from './MonthPickerModal'
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data } = useSession()
@@ -35,12 +36,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <IoChevronForwardOutline size={24} />
             </button>
 
-            <button className="flex items-center px-16 py-8 rounded hover:bg-neutral-200 duration-150">
-              <p className="font-sans text-h4 mr-8">June 2022</p>
-              <i>
-                <IoCaretDownOutline />
-              </i>
-            </button>
+            <MonthPickerModal />
           </div>
 
           <div className="flex justify-end items-center w-1/4">
@@ -51,18 +47,18 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 {
                   label: 'Bills',
                   url: '/',
-                  icon: <IoWallet className="mr-12" color="#8A4FFF" size="20" />
+                  icon: <IoWallet className="mr-12" color="#8A4FFF" size="20" />,
                 },
                 {
                   label: 'Account Settings',
                   url: '/',
-                  icon: <IoPersonSharp className="mr-12" color="#8A4FFF" size="20" />
+                  icon: <IoPersonSharp className="mr-12" color="#8A4FFF" size="20" />,
                 },
                 {
                   label: 'Logout',
                   onClick: () => signOut({ redirect: true }),
-                  icon: <IoLogOut className="mr-12" color="#8A4FFF" size="20" />
-                }
+                  icon: <IoLogOut className="mr-12" color="#8A4FFF" size="20" />,
+                },
               ]}>
               <div>
                 <Avatar
