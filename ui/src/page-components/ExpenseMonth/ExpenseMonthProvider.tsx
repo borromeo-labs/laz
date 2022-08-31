@@ -36,8 +36,6 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     },
   )
 
-  console.log(data, dates)
-
   const insertItem = (item: ExpenseItem) => {
     if (!isSameMonth(new Date(data?.month), new Date(item.due_at))) return
 
