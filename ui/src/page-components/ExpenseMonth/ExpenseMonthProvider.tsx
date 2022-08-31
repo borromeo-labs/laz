@@ -29,7 +29,11 @@ const ExpenseMonthProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { data, isLoading: isDataLoading } = useQuery<ExpenseGroup>(
     ['expense-groups', selectedMonth],
     async () => (await axios.get(`/expense-groups/${selectedMonth}`)).data.expense_group,
-    { enabled: Boolean(session), onSuccess: (data) => setDates(groupItemsByDate(data)) },
+    {
+      enabled: Boolean(session),
+      onSuccess: (data) => setDates(groupItemsByDate(data)),
+      onError: () => setDates([]),
+    },
   )
 
   const insertItem = (item: ExpenseItem) => {

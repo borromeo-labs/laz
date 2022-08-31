@@ -22,4 +22,8 @@ const getDateGroupTotal = (items: ExpenseItem[]): number => {
   return items.reduce((total, item) => total + item.amount, 0)
 }
 
-export { groupItemsByDate, getDateGroupTotal }
+const getDateGroupContainerId = (date: string) => {
+  return `expense-date-group-container-${date}`
+}
+
+export { groupItemsByDate, getDateGroupTotal, getDateGroupContainerId }
