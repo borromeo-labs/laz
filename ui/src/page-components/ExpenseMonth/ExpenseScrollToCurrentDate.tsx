@@ -33,9 +33,11 @@ const ExpenseScrollToCurrentDate = () => {
 
   return (
     <div className="fixed bottom-32 right-32">
-      <Button size="sm" onClick={handleClick}>
-        Scroll to Today
-      </Button>
+      <div className="animate-bounce">
+        <Button size="sm" onClick={handleClick}>
+          Scroll to Today
+        </Button>
+      </div>
     </div>
   )
 }

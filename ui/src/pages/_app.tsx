@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { SessionProvider } from 'next-auth/react'
+import { RollbarProvider, AppErrorBoundary } from '@/contexts/Rollbar'
 import { AxiosProvider } from '@/contexts/Axios'
 import { ExpenseMonthProvider } from '@/page-components/ExpenseMonth'
 import { config } from '@/config'
@@ -45,13 +46,17 @@ function App({ Component, pageProps }) {
         <link href={favicon} rel="apple-touch-icon" />
       </Head>
 
-      <SessionProvider session={pageProps.session}>
-        <QueryClientProvider client={client}>
-          <AxiosProvider>
-            <ExpenseMonthProvider>{getLayout(<Component {...pageProps} />)}</ExpenseMonthProvider>
-          </AxiosProvider>
-        </QueryClientProvider>
-      </SessionProvider>
+      <RollbarProvider>
+        <AppErrorBoundary>
+          <SessionProvider session={pageProps.session}>
+            <QueryClientProvider client={client}>
+              <AxiosProvider>
+                <ExpenseMonthProvider>{getLayout(<Component {...pageProps} />)}</ExpenseMonthProvider>
+              </AxiosProvider>
+            </QueryClientProvider>
+          </SessionProvider>
+        </AppErrorBoundary>
+      </RollbarProvider>
     </>
   )
 }
