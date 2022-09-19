@@ -14,6 +14,8 @@ We minimize every interaction so there's little to no barrier to log your expens
 
 ## Running Locally
 
+This guide assumes you're part of the team. However, if you're simply interested in running Laz, after reading this section please checkout the sections follow this one.
+
 Go the `ui` folder then copy `.env` like so:
 
 ```bash
@@ -26,7 +28,7 @@ Copy its values from our private Discord server. Afterwards, you're good to go:
 npm install && npm run dev
 ```
 
-Afterwards, open up `http://localhost:3000`.
+Open up `http://localhost:3000`.
 
 ### Running API
 
@@ -34,7 +36,7 @@ By default, we recommend you to consume the staging API.
 
 If you plan on running the API locally, check the `api` directory for more information.
 
-## Setting up Rollbar
+### Setting up Rollbar
 
 Go to [Rollbar](https://rollbar.com/) and create your project from there.
 
