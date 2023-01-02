@@ -107,12 +107,12 @@ class ExpenseGroup extends Model
      * @param  string $date
      * @return void
      */
-    public function scopeWithinTheYear($query, string $date)
+    public function scopeWithinTheYear($query, string $year)
     {
-        $dt = Carbon::parse($date);
+        $dt = Carbon::parse("$year-01-01");
 
         $query->whereBetween('month', [
-            $dt->firstOfYear()->format('Y-m-d'),
+            $dt->format('Y-m-d'),
             $dt->lastOfYear()->format('Y-m-d')
         ]);
     }
