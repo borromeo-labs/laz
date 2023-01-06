@@ -78,6 +78,7 @@ const ExpenseClerk = () => {
   }, [input])
 
   useKeyPressEvent('n', null, () => {
+    if (document.activeElement.tagName === 'INPUT') return
     handleOpen()
   })
 
