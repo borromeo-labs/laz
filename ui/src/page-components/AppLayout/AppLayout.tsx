@@ -52,8 +52,8 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <Avatar
                   size={32}
                   name={data.user.email}
-                  variant="beam"
-                  colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+                  variant="marble"
+                  colors={['#1F0441', '#FC1068', '#FCAB10', '#F9CE07', '#0CE3E8']}
                 />
               </div>
             </SelectMenu>
