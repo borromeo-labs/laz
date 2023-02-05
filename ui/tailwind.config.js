@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Readex Pro', ...defaultTheme.fontFamily.sans],
-      serif: ['Playfair Display', ...defaultTheme.fontFamily.serif]
+      serif: ['Playfair Display', ...defaultTheme.fontFamily.serif],
     },
 
     colors: {
@@ -19,7 +19,7 @@ module.exports = {
         500: '#8A4FFF',
         600: '#6366F1',
         700: '#480CC0',
-        800: '#36147B'
+        800: '#36147B',
       },
 
       neutral: {
@@ -31,7 +31,7 @@ module.exports = {
         500: '#6B7280',
         600: '#4B5563',
         700: '#2C2B3C',
-        800: '#121420'
+        800: '#121420',
       },
 
       red: {
@@ -39,7 +39,7 @@ module.exports = {
         200: '#F7A7A1',
         300: '#EB5E55',
         400: '#E72E23',
-        500: '#6F110B'
+        500: '#6F110B',
       },
 
       yellow: {
@@ -47,7 +47,7 @@ module.exports = {
         200: '#F4E47C',
         300: '#FCDC4D',
         400: '#F1C504',
-        500: '#897306'
+        500: '#897306',
       },
 
       green: {
@@ -55,12 +55,12 @@ module.exports = {
         200: '#6EE7B7',
         300: '#34D399',
         400: '#10B981',
-        500: '#059669'
+        500: '#059669',
       },
 
       white: '#fff',
       black: '#000',
-      transparent: 'transparent'
+      transparent: 'transparent',
     },
 
     spacing: {
@@ -74,7 +74,7 @@ module.exports = {
       40: '40px',
       48: '48px',
       56: '56px',
-      64: '64px'
+      64: '64px',
     },
 
     fontSize: {
@@ -83,18 +83,18 @@ module.exports = {
       h3: '25px',
       h4: '20px',
       h5: '16px',
-      h6: '12.8px'
+      h6: '12.8px',
     },
 
     zIndex: {
-      'navigation': 900,
+      navigation: 900,
       'modal-backdrop': 1000,
       'modal-content': 1001,
-      'timeline-circle': 1
+      'month-page-timeline-circle': 499,
+      'month-page-skeleton-fade': 500,
     },
 
-    extend: {
-    }
+    extend: {},
   },
-  plugins: []
+  plugins: [],
 }
