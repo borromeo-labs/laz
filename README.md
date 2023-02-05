@@ -1,3 +1,5 @@
+![Thumbnail](./thumbnail.png)
+
 # Laz
 
 Laz is a personal expenses tracker software on the browser.
