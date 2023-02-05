@@ -22,9 +22,9 @@ const ExpenseMonthSkeleton: React.FC = () => {
             {MONTH_PLACEHOLDER.map((_, i) => (
               <div className="relative mb-[56px]" key={i}>
                 <div className="absolute -left-[360px] flex items-center">
-                  <p className="mr-[24px] flex w-[160px] justify-end">
+                  <div className="mr-[24px] flex w-[160px] justify-end">
                     <Skeleton h={16} w={80} />
-                  </p>
+                  </div>
                   <div className="z-month-page-timeline-circle h-12 w-12 rounded-full bg-primary-500 outline outline-8 outline-[#F8FAFC]"></div>
                 </div>
 
