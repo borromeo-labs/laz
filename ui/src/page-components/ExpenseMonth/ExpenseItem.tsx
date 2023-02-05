@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 import { AxiosResponse } from 'axios'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { useDebouncedCallback } from 'use-debounce'
 import { useAxios } from '@/contexts/Axios'
 import { useExpenseMonth } from './ExpenseMonthProvider'
@@ -42,17 +42,22 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
 
   const { axios } = useAxios()
 
-  // @TODO: Error handling
+  const client = useQueryClient()
+
+  const handleMutation = (values: ExpenseItemFormValues) => {
+    return axios.put<UpdateExpenseItemResponse>(`expense-items/${item.id}`, {
+      ...values,
+      due_at: formatItemDueAt(item.due_at),
+    })
+  }
+
+  const handleSuccess = () => {
+    client.invalidateQueries(['expense-summary', new Date(item.created_at).getFullYear()])
+  }
+
+  // @TODO: Optimistic error handling
   // https://linear.app/borromeo-labs/issue/BOR-72/undo-expense-item-updates-and-show-toast-when-error-occurs
-  const { mutateAsync } = useMutation<AxiosResponse<UpdateExpenseItemResponse>, null, ExpenseItemFormValues>(
-    ['expense-items', item.id],
-    (values) => {
-      return axios.put(`expense-items/${item.id}`, {
-        ...values,
-        due_at: formatItemDueAt(item.due_at),
-      })
-    },
-  )
+  const { mutateAsync } = useMutation(['expense-items', item.id], handleMutation, { onSuccess: handleSuccess })
 
   const handleChange = (field, value) => {
     const values = getValues()
