@@ -2,7 +2,10 @@ import { createContext } from 'react'
 import { ExpenseGroup, ExpenseItem, ID, Uuid } from '@/types/api'
 
 export interface DateGroup {
-  label: string
+  label: {
+    date: string
+    day: string
+  }
   date: string
   total: number
   items: ExpenseItem[]

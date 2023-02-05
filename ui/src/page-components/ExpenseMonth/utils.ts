@@ -11,7 +11,7 @@ const groupItemsByDate = (group: ExpenseGroup): DateGroup[] => {
   return days.map((day) => {
     const d = setDate(new Date(group.month), day + 1)
     const date = format(d, 'yyyy-MM-dd')
-    const label = format(d, 'LLLL d, EEEE')
+    const label = { date: format(d, 'LLLL d'), day: format(d, 'EEEE') }
     const items = date in groups ? groups[date] : []
     const total = date in groups ? getDateGroupTotal(items) : 0
     return { label, date, total, items }
