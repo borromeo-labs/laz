@@ -8,7 +8,7 @@ import cx from 'classnames'
 import { useExpenseMonth } from '@/page-components/ExpenseMonth'
 import { Modal, SelectInput } from '@/components'
 import { IoCaretDownOutline } from 'react-icons/io5'
-import { isSameMonth, isAfter, format } from 'date-fns'
+import { isSameMonth, isAfter, isBefore, format } from 'date-fns'
 import { formatCurrency } from '@/utils'
 import { formatMonth } from '@/utils/api'
 import { MONTHS } from './constants'
@@ -85,8 +85,8 @@ const MonthPickerModal = () => {
 
   return (
     <>
-      <button className="flex items-center px-16 py-8 rounded hover:bg-neutral-200 duration-150" onClick={handleOpen}>
-        <p className="font-sans text-h4 mr-8">{selectedMonthText}</p>
+      <button className="flex items-center rounded px-16 py-8 duration-150 hover:bg-neutral-200" onClick={handleOpen}>
+        <p className="mr-8 font-sans text-h4">{selectedMonthText}</p>
         <i>
           <IoCaretDownOutline />
         </i>
@@ -99,19 +99,23 @@ const MonthPickerModal = () => {
         onClose={handleClose}>
         <div className="grid grid-cols-4 gap-16">
           {months.map((month) => {
-            const isActiveMonth = isSameMonth(new Date(month.date), new Date(selectedMonth))
+            const amount = data?.[month.date] ?? 0
 
-            const isFutureMonth = isAfter(new Date(month.date), new Date(today))
+            const date = new Date(month.date)
 
-            const amount = data?.[month.date]
+            const isActiveMonth = isSameMonth(date, new Date(selectedMonth))
+
+            const isFutureMonth = isAfter(date, new Date(today))
+
+            const isInactivePreviousMonth = isBefore(date, new Date(today)) && amount === 0
 
             return (
               <button
-                className={cx('p-8 text-left rounded disabled:opacity-50 disabled:cursor-not-allowed', {
+                className={cx('rounded p-8 text-left disabled:cursor-not-allowed disabled:opacity-50', {
                   'border-2 border-primary-600': isActiveMonth,
                   'border border-neutral-300': !isActiveMonth,
                 })}
-                disabled={isFutureMonth}
+                disabled={isFutureMonth || isInactivePreviousMonth}
                 onClick={makeSelectDateHandler(month.date)}
                 key={month.date}>
                 <div className="text-neutral-600">{month.label}</div>
