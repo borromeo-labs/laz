@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { AxiosResponse } from 'axios'
 import { useAxios } from '@/contexts/Axios'
 import { ExpenseItem, Uuid } from '@/types/api'
@@ -33,13 +33,17 @@ const useExpenseItemCreateMutation = ({ group }: ExpenseItemParams) => {
 
   const { axios } = useAxios()
 
+  const client = useQueryClient()
+
   const { mutate: mutationFn, ...mutationData } = useMutation<
     AxiosResponse<ExpenseItemCreateResponse>,
     unknown,
     ExpenseItemCreateInputVariables
   >(['expenses-groups', group, 'items'], (values) => axios.post(`/expense-groups/${group}/items`, values), {
-    onSuccess: (response, variables) => {
-      replaceItem(variables.id, response.data.expense_item)
+    onSuccess: async (response, variables) => {
+      const item = response.data.expense_item
+      replaceItem(variables.id, item)
+      client.invalidateQueries(['expense-summary', new Date(item.created_at).getFullYear()])
     },
     onError: (_, variables) => {
       deleteItem(variables)
