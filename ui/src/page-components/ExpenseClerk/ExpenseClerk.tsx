@@ -98,7 +98,7 @@ const ExpenseClerk = () => {
                 <input
                   type="text"
                   className="block w-full border-none bg-transparent px-16 py-12 placeholder-neutral-400 outline-0"
-                  placeholder="Type something like “1000 grab”"
+                  placeholder="Type something like “1k grab” or “189 Spotify”"
                   ref={field.ref}
                   value={field.value}
                   onChange={field.onChange}
@@ -131,7 +131,7 @@ const ExpenseClerk = () => {
           <div className="h-16"></div>
 
           <div className="text-h6 text-neutral-500">
-            Continuously record expenses for the current day as you please (expand).
+            Continuously record expenses for the current day as you please.
           </div>
         </form>
       </Modal>
