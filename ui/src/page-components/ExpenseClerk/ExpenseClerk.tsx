@@ -90,14 +90,14 @@ const ExpenseClerk = () => {
 
       <Modal isOpen={isOpen} onClose={handleClose} title="New Expenses for Today">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center bg-neutral-200 outline-none rounded border border-neutral-200 hover:bg-white hover:outline-none hover:border hover:border-primary-500 hover:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] focus:bg-white focus:border focus:border-primary-500 focus:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] duration-200">
+          <div className="flex items-center rounded border border-neutral-200 bg-white outline-none duration-200 hover:border hover:border-primary-500 hover:bg-white hover:shadow-[0_0_0_4px_rgba(138,79,255,0.15)] hover:outline-none focus:border focus:border-primary-500 focus:bg-white focus:shadow-[0_0_0_4px_rgba(138,79,255,0.15)]">
             <Controller
               control={control}
               name="input"
               render={({ field }) => (
                 <input
                   type="text"
-                  className="block w-full px-16 py-12 placeholder-neutral-400 border-none outline-0"
+                  className="block w-full border-none bg-transparent px-16 py-12 placeholder-neutral-400 outline-0"
                   placeholder="Type something like “1000 grab”"
                   ref={field.ref}
                   value={field.value}
