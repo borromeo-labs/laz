@@ -41,7 +41,7 @@ const ExpenseDateGroupContainer: React.FC<Props> = ({ group, children }) => {
 
   return (
     <div
-      className="relative -ml-[360px] flex justify-center pb-56 group"
+      className="relative -ml-[360px] flex justify-center pb-56"
       id={getDateGroupContainerId(group.date)}
       key={group.date}
       ref={registerRef}>

@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames'
 import { IoAddSharp } from 'react-icons/io5'
 import { formatCurrency } from '@/utils'
 import { useExpenseMonth } from './ExpenseMonthProvider'
@@ -17,7 +18,7 @@ const ExpenseMonth: React.FC = () => {
   return (
     <>
       <div className="py-56">
-        {dates.map((group) => (
+        {dates.map((group, i) => (
           <ExpenseDateGroupContainer group={group} key={group.date}>
             <div className="pr-[160px]">
               <div className="relative mb-56 flex h-full">
@@ -27,7 +28,10 @@ const ExpenseMonth: React.FC = () => {
                   <div className="text-neutral-500">{group.label.day}</div>
                 </div>
                 <div className="z-month-page-timeline-circle h-12 w-12 rounded-full bg-primary-500 outline outline-8 outline-[#F8FAFC]"></div>
-                <div className="absolute top-0 -bottom-56 right-[5px] w-px bg-neutral-200 group-last:hidden"></div>
+                <div
+                  className={cx('absolute top-0 -bottom-56 right-[5px] w-px bg-neutral-200', {
+                    hidden: i === dates.length - 1,
+                  })}></div>
               </div>
             </div>
 
