@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
+import cx from 'classnames'
 import { formatItemDueAt } from '@/utils/api'
 import { DateGroup } from './context'
 import { getDateGroupContainerId } from './utils'
+import { isSameMonth } from 'date-fns'
 
 interface Props {
   group: DateGroup
@@ -10,7 +12,17 @@ interface Props {
 
 const ExpenseDateGroupContainer: React.FC<Props> = ({ group, children }) => {
   // @TODO: Update every interval
-  const [today] = useState(() => formatItemDueAt(new Date()))
+  const [today] = useState(() => new Date())
+
+  const todayString = useMemo(() => {
+    return formatItemDueAt(today)
+  }, [today])
+
+  const isDayActive = todayString === group.date
+
+  const isMonthActive = useMemo(() => {
+    return isSameMonth(new Date(group.date), today)
+  }, [group.date, today])
 
   // Prevent subsequent calls. For some reason, ref gets called again when user refocuses the window.
   const onceRef = useRef(false)
@@ -30,7 +42,7 @@ const ExpenseDateGroupContainer: React.FC<Props> = ({ group, children }) => {
       return
     }
 
-    if (today !== group.date) {
+    if (!isDayActive) {
       return
     }
 
@@ -41,7 +53,9 @@ const ExpenseDateGroupContainer: React.FC<Props> = ({ group, children }) => {
 
   return (
     <div
-      className="relative -ml-[360px] flex justify-center pb-56"
+      className={cx('relative -ml-[360px] flex justify-center pb-56', {
+        'opacity-60 focus-within:opacity-100': isMonthActive && !isDayActive,
+      })}
       id={getDateGroupContainerId(group.date)}
       key={group.date}
       ref={registerRef}>
