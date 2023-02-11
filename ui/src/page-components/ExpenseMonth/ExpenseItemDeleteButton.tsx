@@ -38,7 +38,7 @@ const ExpenseItemDeleteButton: React.FC<ExpenseItemDeleteButtonProps> = ({ item 
               onHoverStart={() => setIsHovered(true)}
               onHoverEnd={() => setIsHovered(false)}
               className="relative block w-full rounded bg-neutral-200 py-12 px-12">
-              <span className="z-10 relative flex items-center leading-none text-neutral-600">
+              <span className="z-10 relative flex items-center font-medium leading-none text-neutral-600">
                 <IoArchiveOutline />
                 <span className="ml-8">{isHovered ? 'Hold to confirm' : 'Delete'}</span>
               </span>
@@ -49,7 +49,7 @@ const ExpenseItemDeleteButton: React.FC<ExpenseItemDeleteButtonProps> = ({ item 
                   variants={{ hover: { width: '100%' } }}
                   transition={{ duration: 1 }}
                   className="h-full overflow-hidden rounded bg-red-200">
-                  <span className="flex h-full w-[206px] items-center py-12 px-12 leading-none text-red-500">
+                  <span className="flex h-full w-[206px] items-center py-12 px-12 font-medium leading-none text-red-400">
                     <IoArchiveOutline />
                     <span className="ml-8">Hold to confirm</span>
                   </span>
