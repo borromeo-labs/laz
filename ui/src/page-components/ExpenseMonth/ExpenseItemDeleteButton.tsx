@@ -13,6 +13,11 @@ interface ExpenseItemDeleteButtonProps {
 const ExpenseItemDeleteButton: React.FC<ExpenseItemDeleteButtonProps> = ({ item }) => {
   const { mutate, isLoading } = useDeleteExpenseMonthMutation()
 
+  // This is a work in progress.
+  // Disabling for now, accidentally pushed changes related to another thing
+  // and I don't want to spend time managing branches.
+  return null
+
   return (
     <div className="absolute top-0 bottom-0 right-0 flex translate-x-full items-center px-8">
       <div className="-translate-x-4 opacity-0 transition-transform group-focus-within:translate-x-0 group-focus-within:opacity-100 group-hover:translate-x-0 group-hover:opacity-100">
