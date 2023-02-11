@@ -27,6 +27,8 @@ Afterwards, run:
 ./vendor/bin/sail up
 ```
 
+> If this gets stuck in the gpg step, refer to the fix [here](https://github.com/laravel/sail/issues/503#issuecomment-1336273951). (I have no time to update sail right now)
+
 Run migrations and seed data:
 
 ```bash

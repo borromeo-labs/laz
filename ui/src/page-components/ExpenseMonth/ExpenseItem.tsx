@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
-import { AxiosResponse } from 'axios'
 import { useMutation, useQueryClient } from 'react-query'
 import { useDebouncedCallback } from 'use-debounce'
 import { useAxios } from '@/contexts/Axios'
@@ -8,8 +7,9 @@ import { useExpenseMonth } from './ExpenseMonthProvider'
 import { ExpenseItem } from '@/types/api'
 import { useForm, FormProvider, Controller, RefCallBack } from 'react-hook-form'
 import { formatItemDueAt } from '@/utils/api'
-import { yupResolver as resolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import { yupResolver as resolver } from '@hookform/resolvers/yup'
+import { ExpenseItemDeleteButton } from './ExpenseItemDeleteButton'
 
 const schema = Yup.object({
   amount: Yup.number().positive().integer(),
@@ -67,7 +67,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
 
   return (
     <FormProvider {...form}>
-      <div className="flex group" key={item.id}>
+      <div className="group relative flex " key={item.id}>
         <Controller
           name="amount"
           control={control}
@@ -100,6 +100,8 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ item }) => {
             />
           )}
         />
+
+        <ExpenseItemDeleteButton item={item} />
       </div>
     </FormProvider>
   )
@@ -134,7 +136,7 @@ const ExpenseDebouncedInput: React.FC<ExpenseDebouncedInputProps> = React.forwar
         placeholder={placeholder}
         name={name}
         className={cx(
-          'group-last:rounded-br-[8px] group-last:border-b-0 last:border-r-0 px-16 py-8 border-r border-b border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ring-inset',
+          'focus:ring-blue-500 border-r border-b border-neutral-200 px-16 py-8 ring-inset last:border-r-0 focus:outline-none focus:ring-2 group-last:rounded-br-[8px] group-last:border-b-0',
           {
             'w-full': width == null,
           },
