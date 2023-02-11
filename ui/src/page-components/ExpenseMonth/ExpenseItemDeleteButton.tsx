@@ -49,7 +49,7 @@ const ExpenseItemDeleteButton: React.FC<ExpenseItemDeleteButtonProps> = ({ item 
                   variants={{ hover: { width: '100%' } }}
                   transition={{ duration: 1 }}
                   className="h-full overflow-hidden rounded bg-red-200">
-                  <span className="flex h-full w-[206px] items-center py-12 px-12 font-medium leading-none text-red-400">
+                  <span className="flex h-full w-[206px] items-center py-12 px-12 font-medium leading-none text-red-500">
                     <IoArchiveOutline />
                     <span className="ml-8">Hold to confirm</span>
                   </span>
