@@ -13,8 +13,8 @@ const ToastContainer = () => {
     <Toast.Provider swipeDirection="right">
       <Toast.Root
         className={cx([
-          'data-[state=open]:animate-in data-[state=open]:slide-in',
-          'data-[state=closed]:animate-out data-[state=closed]:fade-out',
+          'data-[state=open]:animate-in data-[state=open]:slide-in-from-top-full',
+          'data-[state=closed]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full',
           'data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]',
           'data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:duration-300',
           'data-[swipe=end]:animate-out data-[swipe=end]:fade-out',
@@ -26,7 +26,7 @@ const ToastContainer = () => {
         duration={500000000}
         key={active?.id}>
         <Toast.Description asChild>
-          <p className="text-h6">{active?.text}</p>
+          <p className="text-h6 animate-in fade-in-80">{active?.text}</p>
         </Toast.Description>
 
         <Toast.Action className="[grid-area:_action]" asChild altText="Goto schedule to undo">
