@@ -1,5 +1,5 @@
 import { useAxios } from '@/contexts/Axios'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { ExpenseItem } from '@/types/api'
 import { useExpenseMonth } from '../ExpenseMonthProvider'
 
@@ -8,12 +8,21 @@ const useDeleteExpenseMonthMutation = () => {
 
   const { deleteItem } = useExpenseMonth()
 
-  const handleRequest = (item: ExpenseItem) => {
-    return axios.delete(`expense-items/${item.id}`)
+  const client = useQueryClient()
+
+  const handleRequest = async (item: ExpenseItem) => {
+    await axios.delete(`expense-items/${item.id}`)
+    return item
+  }
+
+  const handleSuccess = (item: ExpenseItem) => {
+    client.invalidateQueries(['expense-summary', new Date(item.created_at).getFullYear()])
   }
 
   // Add error-handling; undo delete and bring back item when error occurs
-  const { mutate: mutationFn, ...mutationData } = useMutation(handleRequest)
+  const { mutate: mutationFn, ...mutationData } = useMutation(handleRequest, {
+    onSuccess: handleSuccess,
+  })
 
   const mutate = (item: ExpenseItem) => {
     deleteItem(item)

@@ -8,6 +8,7 @@
   "dependencies": {
     "@headlessui/react": "^1.6.5",
     "@hookform/resolvers": "^2.9.3",
+    "@radix-ui/react-popover": "^1.0.3",
     "@rollbar/react": "^0.11.1",
     "axios": "^0.27.2",
     "boring-avatars": "^1.7.0",
@@ -28,6 +29,7 @@
     "react-use": "^17.4.0",
     "rollbar": "^2.25.2",
     "use-debounce": "^8.0.3",
+    "use-long-press": "^2.0.3",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
   },
