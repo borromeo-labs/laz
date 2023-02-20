@@ -22,8 +22,7 @@ const ToastContainer = () => {
         ])}
         open={Boolean(active)}
         onOpenChange={() => dismiss(active.id)}
-        // duration={active?.duration}
-        duration={500000000}
+        duration={active?.duration}
         key={active?.id}>
         <Toast.Description asChild>
           <p className="text-h6 animate-in fade-in-80">{active?.text}</p>

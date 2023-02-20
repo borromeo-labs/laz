@@ -19,6 +19,7 @@ const useDeleteExpenseMonthMutation = () => {
   }
 
   const handleSuccess = (item: ExpenseItem) => {
+    toast('Expense record was deleted.')
     client.invalidateQueries(['expense-summary', new Date(item.created_at).getFullYear()])
   }
 
@@ -28,9 +29,8 @@ const useDeleteExpenseMonthMutation = () => {
   })
 
   const mutate = (item: ExpenseItem) => {
-    toast('Expense record was deleted.')
-    // deleteItem(item)
-    // mutationFn(item)
+    deleteItem(item)
+    mutationFn(item)
   }
 
   return { mutate, ...mutationData }
