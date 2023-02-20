@@ -2,11 +2,14 @@ import { useAxios } from '@/contexts/Axios'
 import { useMutation, useQueryClient } from 'react-query'
 import { ExpenseItem } from '@/types/api'
 import { useExpenseMonth } from '../ExpenseMonthProvider'
+import { useToast } from '@/contexts/Toast'
 
 const useDeleteExpenseMonthMutation = () => {
   const { axios } = useAxios()
 
   const { deleteItem } = useExpenseMonth()
+
+  const { toast } = useToast()
 
   const client = useQueryClient()
 
@@ -25,8 +28,9 @@ const useDeleteExpenseMonthMutation = () => {
   })
 
   const mutate = (item: ExpenseItem) => {
-    deleteItem(item)
-    mutationFn(item)
+    toast('Expense record was deleted.')
+    // deleteItem(item)
+    // mutationFn(item)
   }
 
   return { mutate, ...mutationData }

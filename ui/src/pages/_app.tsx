@@ -5,6 +5,8 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 import { SessionProvider } from 'next-auth/react'
 import { RollbarProvider, AppErrorBoundary } from '@/contexts/Rollbar'
 import { AxiosProvider } from '@/contexts/Axios'
+import { ToastProvider } from '@/contexts/Toast'
+import { ToastContainer } from '@/page-components/ToastContainer'
 import { ExpenseMonthProvider } from '@/page-components/ExpenseMonth'
 import { config } from '@/config'
 
@@ -51,7 +53,10 @@ function App({ Component, pageProps }) {
           <SessionProvider session={pageProps.session}>
             <QueryClientProvider client={client}>
               <AxiosProvider>
-                <ExpenseMonthProvider>{getLayout(<Component {...pageProps} />)}</ExpenseMonthProvider>
+                <ToastProvider>
+                  <ExpenseMonthProvider>{getLayout(<Component {...pageProps} />)}</ExpenseMonthProvider>
+                  <ToastContainer />
+                </ToastProvider>
               </AxiosProvider>
             </QueryClientProvider>
           </SessionProvider>
