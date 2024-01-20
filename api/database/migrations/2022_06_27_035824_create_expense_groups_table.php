@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('name');
-            $table->float('amount_total');
+            $table->float('amount_total', 9, 2);
             $table->timestamps();
         });
     }
