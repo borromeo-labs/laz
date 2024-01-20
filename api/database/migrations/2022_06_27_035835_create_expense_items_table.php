@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('group_id');
             $table->enum('type', ['expense', 'bill']);
-            $table->float('amount', 8, 2);
+            $table->float('amount', 9, 2);
             $table->string('description');
             $table->date('due_at');
             $table->timestamps();
