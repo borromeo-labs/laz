@@ -69,7 +69,10 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    // This was originally UTC, but this was the simplest way to allow ExpenseGroups
+    // to be created when date changes in the Philippines. With the way it's setup
+    // right now, often I'm not able to log expenses during midnight.
+    'timezone' => 'Asia/Singapore',
 
     /*
     |--------------------------------------------------------------------------
